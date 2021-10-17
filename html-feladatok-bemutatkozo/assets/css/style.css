@@ -1,0 +1,165 @@
+@font-face {
+    font-family: Gluten;
+    src: url(/assets/fonts/Gluten-ExtraLight.ttf);
+}
+
+* {
+    font-family: Gluten;
+    box-sizing: border-box;
+}
+
+#menu ul {
+    margin: 0;
+    padding-left: 0;
+}
+
+#menu ul li {
+    display: inline-block;
+    width: 10em;
+    text-align: center;
+    font-size: large;
+    margin-right: 2%;
+    margin-left: 2%;
+    background: rgb(155, 111, 86);
+    padding-top: .5em;
+    padding-bottom: .5em;
+    border-radius: 1em;
+    box-shadow: .2em .2em .2em grey;
+}
+
+#menu ul li:hover {
+    position: relative;
+    box-shadow: .3em .3em .8em grey;
+}
+
+#menu ul li:active {
+    position: relative;
+    top: .15em;
+    left: .15em;
+    box-shadow: .05em .05em .2em grey;
+}
+
+#menu ul a {
+    color: white
+}
+
+#menu ul a:visited {
+    color: bisque
+}
+
+.article1 {
+    display: inline-block;
+    width: 29%;
+    margin: 1.66%;
+    border-style: dotted;
+    border-width: 1px;
+    border-color: gray;
+    padding: 20px;
+    background: rgba(220, 220, 220, 0.5);
+    border-radius: .5em;
+    box-shadow: .2em .2em .2em grey;
+}
+
+.article2 {
+    display: inline-block;
+    width: 98%;
+    margin: 1%
+}
+
+
+.img-container {
+    float: left;
+    width: 33%;
+}
+
+.text-container {
+    float: left;
+    width: 67%;
+}
+
+
+.work-image {
+    margin-left: 2%;
+    float: left;
+    width: 96%;
+    box-shadow: .3em .3em .7em grey;
+}
+
+.gallery-image {
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.container2 {
+    width: 100%;
+    height: auto;
+    padding: 1%;
+}
+
+
+
+footer {
+    display: block;
+}
+
+.footer {
+    display: block;
+    margin-top: 1em;
+}
+
+
+button {
+    padding: .5em;
+    border-radius: .4em;
+    box-shadow: .2em .2em .2em grey;
+}
+
+button:active {
+    position: relative;
+    top: .15em;
+    left: .15em;
+    box-shadow: .05em .05em .2em grey;
+}
+
+.form-container {
+    display: block;
+}
+
+form {
+    display: inline-block;
+}
+
+form * {
+    display: block;
+    margin-top: .5em;
+}
+
+.ol1 *{
+    margin-top: .5em;
+}
+
+@media screen and (max-width: 1024px) {
+    .text-container {
+        width: 98%;
+        margin-top: 1em;
+    }
+
+    .gallery-image-container {
+        width: 98%;
+    }
+
+    #menu ul li {
+        display: block;
+        margin-top: .5em;
+        margin-bottom: .5em;
+    }
+    .article1 {
+        width: 98%;
+    }
+    #johndoe3 {
+        width: 50%;
+    }
+    #johndoe3b {
+        width: 100%;
+    }
+}

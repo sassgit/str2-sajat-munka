@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header>
+        <script src="assets/js/replaceHTML.js" url="assets/html/menu.html"></script></div>
+        <h1>About</h1>
+    </header>
+    <main class="main">
+        <section class="inner">
+            <article class="content">
+                <header>
+                    <img id="johndoe3b" src="/assets/img/johndoe3.png" alt="John Doe">
+                    <h4>Szakmai önéletrajz</h4>
+                </header>
+                <main>
+                    <p>John Doe szakmai tapasztalatai:</p>
+                    <ol class="ol1">
+                        <li><b>.NET C#</b></li>
+                        <ul>
+                            <li>Windows Forms alkalmazások</li>
+                            <li>Konzol alkalmazások</li>
+                            <li>Mikrovezérlővel és FPGA-val való kommunikáció saját protokollokkal</li>
+                            <li>Vezérlő szoftverek különféle egyedi gépekhez, elektronikákhoz.</li>
+                        </ul>
+                        <li>Nagy teljesítményű képfeldolgozó algoritmusok</li>
+                        <ul>
+                            <li><b>Intel&reg Integrated Performance Primitives</b> függvénykönyvtár használata</li>
+                            <li><b>Emgu</b> függvénykönyvtár használata</li>
+                            <li>C++.NET wrapper <b>OpenCV</b>-hez az Emgu-ból hiányzó függvényekhez</li>
+                            <li>CPU SIMD C++ alatt (<b>Intel Intrinsics</b>)</li>
+                            <li><b>NVIDIA CUDA</b> kernelek</li>
+                        </ul>
+                        <li>Mikrovezérlő programozás</li>
+                        <ul>
+                            <li>PIC18F C</li>
+                            <li>PIC18F assembly</li>
+                        </ul>
+                        <li>FPGA programozása (Verilog)</li>
+                        <ul>
+                            <li>A/D és D/A vezérlés</li>
+                            <li>SPI, I<sup>2</sup>C kommunikáció</li>
+                            <li>Különféle szenzorok kezelése</li>
+                            <li>Motorvezérlés</li>
+                            <li>Memóriakezelés</li>
+                            <li>Flash memória írás/olvasás</li>
+                            <li>PC-vel való kommunikációhoz UDP/IP stack megvalósítása 10/100/1000Gbit-en (Verilog)</li>
+                            <ul>
+                                <li>Media Access Control</li>
+                                <li>Internel Protocol, ARP</li>
+                                <li>ICMP (csak ping)</li>
+                                <li>UDP</li>
+                            </ul>
+                        </ul>
+                        <li>Áramköri panelek (PCB) tervezése</li>
+                        <ul>
+                            <li>Mikrovezérlős áramkörök</li>
+                            <li>FPGA processzor board</li>
+                            <ul>
+                                <li>Spartan 3 FPGA</li>
+                                <li>5V bemenet, FPGA tápok előállítása, 3,3V I/O</li>
+                                <li>1Mbyte SRAM</li>
+                                <li>Platform flash</li>
+                                <li>USB 2.0 Hi-Speed kommunikáció PC-vel</li>
+                                <li>FPGA felprogramozása Platform flash-ből vagy USB-ről</li>
+                                <li>87 I/O</li>
+                                <li>JTAG port</li>
+                            </ul>
+                            <li>Különféle feladatokat megvalósító áramkörök az FPGA processzor board felhasználásával</li>
+                            <li>Más FPGA board alkalmazása saját panelban</li>
+                        </ul>
+                    </ol>
+                </main>
+                <footer>
+                    <div class="form-container">
+                        <form action="/about.php">
+                            <label for="name">Név: (min. 5 betű)</label>
+                            <input pattern="[A-ZÍŰÁÉÚŐÓÜÖa-zíűáéúőóüö][A-ZÍŰÁÉÚŐÓÜÖa-zíűáéúőóüö ]{4,}" required id="name" name="name" type="text">
+                            <label for="e-mail">e-mail</label>
+                            <input id="e-mail" name="e-mail" required type="email">
+                            <label for="message">Üzenet</label>
+                            <textarea required minlength="20" id="message" name="message" type="text"></textarea>
+                            <!-- <input type="submit" value="Submit"> -->
+                            <button type="submit" value="Submit">Üzenet elküldése</button>
+                        </form>
+                    </div>
+                </footer>
+            </article>
+        </section>
+    </main>
+    <footer class="footer">
+        <a href="#menu"><button>Oldal teteje</button></a>
+    </footer>
+    <script src="/assets/js/main.js" type="module"></script>
+</body>
+
+</html>
