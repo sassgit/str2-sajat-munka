@@ -1,0 +1,55 @@
+body {
+    background: lightgray;
+}
+
+#flag {
+    display: block;
+    position: relative;
+    left: -100px;
+    margin-right: 50%;
+    margin-left: 50%;
+    width: 200px;
+    height: 100px;
+    /* border: solid black 1px; */
+}
+
+#red {
+    background: red;
+    height: 33.333%;
+}
+
+#green {
+    background: green;
+    height: 33.333%;
+}
+
+#blue {
+    background: white;
+    height: 33.333%;
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+}
+
+h2 {
+    margin-top: 2em;
+}
+
+#content-properties tbody tr {
+    background: white;
+}
+
+#content-players tbody tr:nth-of-type(3n + 1) {
+    background: #fdd;
+}
+
+#content-players tbody tr:nth-of-type(3n + 2) {
+    background: #fff;
+}
+
+#content-players tbody tr:nth-of-type(3n) {
+    background: #dfd;
+}
