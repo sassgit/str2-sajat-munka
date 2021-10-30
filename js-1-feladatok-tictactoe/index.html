@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+    <h1>Tic-Tac-Toe game</h1>
+    <div class="gameholder">
+        <div id="game">
+        </div>
+    </div>
+    <div class="controls">
+        <button onclick="replayButtonClick()">Replay</button>
+        <span id="result"></span>
+        <div class="comments"></div>
+        <input id="aiplayer" class="tgl-btn3" type="checkbox" onclick="modeCheckbox()" />
+        <label for="aiplayer" class="tgl-btn3">
+            <div class="tgl-btn3"></div> Ai player 2
+        </label>
+        <input id="qmark" class="tgl-btn3" type="checkbox" onclick="modeCheckbox()" />
+        <label for="qmark" class="tgl-btn3">
+            <div class="tgl-btn3"></div> All '?' mode
+        </label>
+        <input id="blind" class="tgl-btn3" type="checkbox" onclick="modeCheckbox()" />
+        <label for="blind" class="tgl-btn3">
+            <div class="tgl-btn3"></div>Blind mode
+        </label>
+        <div id="playersymbol" class="comments"></div>
+        <div class="comments">Numeric pad can also be used for control.</div>
+        <script src="assets/js/main.js"></script>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,246 @@
+:root {
+    font-size: 2vmin;
+}
+
+body {
+    background: rgb(200, 200, 200);
+}
+
+button {
+    font-size: 1.6rem;
+    padding: .2rem;
+    margin: .2rem;
+    border-radius: .2rem;
+    user-select: none;
+}
+
+.gameholder {
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 20px;
+    width: 30rem;
+    height: 30rem;
+}
+
+.controls, h1, .gameholder {
+    margin-left: 2rem;
+}
+
+
+#game {
+    background: lightblue;
+    border:  none;
+    box-shadow: 3px 3px 10px grey;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    border-radius: .5rem;
+}
+
+.comments {
+    font-size: 1.2rem;
+    display: block;
+    padding-top: .5rem;
+}
+
+#result {
+    font-size: 2rem;
+}
+
+.cell:nth-child(1) {
+    border-radius: .5rem 0 0 0;
+}
+
+.cell:nth-child(3) {
+    border-radius: 0 .5rem 0 0;
+}
+
+.cell:nth-child(7) {
+    border-radius: 0 0 0 .5rem;
+}
+
+.cell:nth-child(9) {
+    border-radius: 0 0 .5rem 0;
+}
+
+.cell {
+    display: inline-block;
+    border: 1px solid black;
+    width: 33.333%;
+    height: 33.333%;
+    text-align: center;
+    box-sizing: border-box;
+    line-height: 10rem;
+}
+
+.cell span {
+    font-size: 8rem;
+    user-select: none;
+    pointer-events: none;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+    transform: scale(1, 1);
+    transition: transform .15s;
+}
+
+@keyframes animation_disabe {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(-10deg);
+    }
+
+    75% {
+        transform: rotate(10deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes animation_win {
+    0% {
+        transform: scale(1, 1);
+    }
+
+    25% {
+        transform: scale(.5, .5);
+    }
+
+    50% {
+        transform: scate(1.5, 1.5);
+    }
+
+    75% {
+        transform: scate(1, 1);
+    }
+    
+    100% {
+        transform: scale(1, 1);
+    }
+}
+
+@keyframes animation_aistep {
+    0% {
+        transform: scale(1, 1);
+    }
+
+    50% {
+        transform: scale(1.5, 1.5);
+    }
+    
+    100% {
+        transform: scale(1, 1);
+    }
+}
+
+
+.cell.aistep span {
+    animation: animation_aistep .5s 1;
+}
+
+.cell:active span, .cell.numpad span {
+    animation: animation_disabe .1s infinite;
+}
+
+.cell.blind span{
+    color: transparent;
+    transition: color .3s;
+    transition-delay: .3s;
+}
+
+
+.cell.freecell:active span, .cell.freecell.numpad span {
+    transform: scale(1.5, 1.5);
+    transition: transform .15s;
+    animation: none;
+}
+
+
+.cell.win span {
+    animation: animation_win .5s infinite;
+}
+
+.cell:nth-child(2n) {
+    background: rgb(190, 190, 190);
+}
+
+.cell:nth-child(2n+1) {
+    background: rgb(210, 210, 210);
+}
+
+.cell:nth-child(2n):hover {
+    background: rgb(140, 190, 190);
+}
+
+.cell:nth-child(2n+1):hover {
+    background: rgb(160, 210, 210);
+}
+
+.cell:nth-child(2n).win, .cell:nth-child(2n).win:hover {
+    background: rgb(190, 150, 150);
+}
+
+.cell:nth-child(2n+1).win, .cell:nth-child(2n+1).win:hover {
+    background: rgb(210, 150, 150);
+}
+
+
+/*
+checkbox
+*/
+
+input.tgl-btn3 {
+    display: none;
+}
+
+input.tgl-btn3 + label.tgl-btn3 {
+    user-select: none;
+}
+
+input.tgl-btn3 + label.tgl-btn3 div.tgl-btn3{
+    display: inline-block;
+    position: relative;
+    background-color: #f0f0f0;
+    box-sizing: border-box;
+    border: none;
+    width: 2em;
+    height: 1em;
+    top: 0.15em;
+    left: 0em;
+    border-radius: 2em;
+    user-select: none;
+    transition: background-color .3s
+}
+input.tgl-btn3:checked + label.tgl-btn3 div.tgl-btn3{
+    background-color: #9fd6ae;
+    transition: background-color .3s
+}
+
+input.tgl-btn3 + label.tgl-btn3 div.tgl-btn3::before {
+    display: inline-block;
+    position: relative;
+    box-sizing: border-box;
+    border: 2px solid #f0f0f0;
+    content: "";
+    width: 1em;
+    height: 1em;
+    border-radius: 2em;
+    left: 0em;
+    top: 0em;
+    background-color: #fff;
+    transition-duration: .3s;
+    transition-property: left border;
+}
+
+input.tgl-btn3:checked + label.tgl-btn3 div.tgl-btn3::before {
+    background-color: #fff;
+    left: 1em;
+    border: 2px solid #9fd6ae;
+    transition-duration: .3s;
+    transition-property: left border;
+}
