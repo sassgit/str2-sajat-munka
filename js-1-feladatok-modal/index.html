@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="assets/modal/modal.css">
+</head>
+<body>
+    <h1>Simple modal demonstration</h1>
+    <button id="modalbtn" onclick="modalbtnClick(0)">Open Modal</button>
+    <button id="modalbtn" onclick="modalbtnClick(1)">Open Modal (Promise)</button>
+    <div class="resultDiv">
+        <span id="result"></span>
+    </div>
+    <!-- modal -->
+    <div id="myModal" class="modal-container">
+        <div id="myModal-content" class="modal-content">
+            <header class="modal-header">
+                <div>
+                    Title
+                    <button class="modal-close">&times;</button>
+                </div>
+            </header>
+            <main class="modal-main">
+                <div>
+                    <p>Message</p>
+                </div>
+            </main>
+            <footer>
+                <div class="modal-footer">
+                    <button class="modal-btn">Mégsem</button>
+                    <button class="modal-btn">Ok.</button>
+                    <h4 class="modal-footer">Footer</h4>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/modal/modal.js"></script>
+</body>
+</html>
