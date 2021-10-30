@@ -1,3 +1,4 @@
+const aiWorkerFN = 'assets/js/aiworker.js';
 const gameDiv = document.querySelector("#game");
 const cellDivs = new Array(9).fill(null);
 const cellSpans = new Array(9).fill(null);
@@ -45,12 +46,20 @@ let symbol = ['X', '0'];
 
 let gameState = [0, 0];
 
+let gameHistory = [];
+
 let numpadEnable = true;
 let numpadPressed = 0;
 
-let aiplayer = [false, false];
+let aiWorker = null;
+let aiPlayer = [false, false];
 let aiTimeout = [200, 200];
+let aiDepth = [9, 5];
+let maxDepth = 9;
+let looseChooseDepth = 5;
 let stopper = [0, 0];
+let winCounter = [0, 0];
+let drawCounter = 0;
 let stopWatch = 0;
 
 init();
@@ -88,7 +97,7 @@ function keydown(ev) {
             if (numpadPressed == nidx) {
                 let cell = cellDivs[idx];
                 mousedonwCell(cell);
-                if (!aiplayer[currentPlayer])
+                if (!aiPlayer[currentPlayer])
                     cell.classList.add(numpadCN);
             }
         }
@@ -161,8 +170,9 @@ function getstopper(player) {
 
 function nextShow() {
     let str = `player ${currentPlayer + 1} (${symbol[currentPlayer]}) next, `;
-    str += " player 1 time: " + (getstopper(0) / 1000).toFixed(2) + " s, ";
-    str += " player 2 time: " + (getstopper(1) / 1000).toFixed(2) + " s";
+    str += ` player 1 time: " + ${(getstopper(0) / 1000).toFixed(4)} s, `;
+    str += ` player 2 time: ${(getstopper(1) / 1000).toFixed(4)} s`;
+    str += ` |   ${winCounter[0]}: ${winCounter[1]} | ${drawCounter} draw game.`;
     playersymbol.textContent = str;;
 }
 
@@ -175,7 +185,7 @@ function mousedown(ev) {
 }
 
 function mousedonwCell(cell) {
-    if (isFree(cell) && !aiplayer[currentPlayer]) {
+    if (isFree(cell) && !aiPlayer[currentPlayer]) {
         getSpan(cell).textContent = qmark || symbol[currentPlayer];
     } else
         cell.classList.remove(aiStepCN); // if user click, do not animate aistep more.
@@ -185,6 +195,7 @@ function Step(cell) {
     if (isFree(cell)) {
         occupyCell(cell, currentPlayer);
         gameState[currentPlayer] |= 1 << cellDivs.indexOf(cell);
+        gameHistory.push([gameState[0], gameState[1]]);
         if (stopWatch) {
             stopper[currentPlayer] += Date.now() - stopWatch;
         }
@@ -213,7 +224,7 @@ function click(ev) {
 }
 
 function modeCheckbox(ev) {
-    aiplayer = [checkAi1.checked, checkAi2.checked];
+    aiPlayer = [checkAi1.checked, checkAi2.checked];
     aiStep();
     qmark = checkQmode.checked ? "?" : null;
     blindmode = checkBlind.checked;
@@ -232,7 +243,7 @@ function modeCheckbox(ev) {
 }
 
 function clickCell(cell) {
-    if (isFree(cell) && !aiplayer[currentPlayer]) {
+    if (isFree(cell) && !aiPlayer[currentPlayer]) {
         Step(cell);
     }
 }
@@ -261,7 +272,7 @@ function checkEndGame() {
 }
 
 function getplayerName(player) {
-    if (aiplayer[player])
+    if (aiPlayer[player])
         return `Computer #${player + 1}`;
     else
         return `Player #${player + 1}`;
@@ -271,6 +282,7 @@ function winPlayer(player, winline) {
     let msg = symbol[0] == symbol[1] ? // it may be possible, that the two sybol is same!
         `${getplayerName(player)} wins!` :
         `${getplayerName(player)} (${symbol[player]}) wins!`;
+    winCounter[player]++;
     spanResult.textContent = msg;
     console.log(msg);
     cellDivs
@@ -282,6 +294,7 @@ function winPlayer(player, winline) {
 
 function drawGame() {
     let msg = "Draw!";
+    drawCounter++;
     spanResult.textContent = msg;
     console.log(msg);
 }
@@ -295,15 +308,11 @@ function gameReset() {
     gameDiv.focus();
     stopper = [0, 0];
     stopWatch = 0;
+    gameHistory = [];
     nextShow();
     aiStep();
 }
 
-
-function gameWork() {
-    gameCheckEnd();
-
-}
 
 function winState(state) {
     return winStates.find(win => (state & win) == win);
@@ -313,48 +322,35 @@ function log2i(x) {
     return pow2.indexOf(x);
 }
 
-function aiStep(timermode = true) {
-    if (aiplayer[currentPlayer]) {
-        if (timermode && aiTimeout[currentPlayer])
-            setTimeout(() => aiStep(false), aiTimeout[currentPlayer]);
-        else {
-            let nostep = gameState[0] | gameState[1];
-            let possible = [];
-            let wrong = [];
-            let goodstep = 0;
-            for (let i = 1; i <= 256; i <<= 1) {
-                if (!(nostep & i)) {
-                    if (winState(i | gameState[currentPlayer]))
-                        goodstep = i;
-                    possible.push(i);
-                    let nostep2 = i | nostep;
-                    for (let j = 1; j <= 256; j <<= 1) {
-                        if (!(nostep2 & j) && winState(j | gameState[currentPlayer ^ 1])) {
-                            wrong.push(i);
-                            break;
-                        }
-                    }
-                }
-            }
-            let step;
-            if (goodstep)
-                step = log2i(goodstep);
-            else {
-                if (wrong.length != possible.length)
-                    possible = possible.filter(e => !wrong.includes(e));
-                step = log2i(possible[Math.floor(Math.random() * possible.length)])
-            }
-            let cell = cellDivs[step];
-            cell.classList.add(aiStepCN);
-            Step(cell);
-        }
-    }
+function aiStepGui(stepPow2) {
+    let step = log2i(stepPow2); // kettő hatvány formátumú lépést átkonvertáljuk index-re.
+    let cell = cellDivs[step];
+    cell.classList.add(aiStepCN);
+    Step(cell);
 }
 
-function getRegularSteps(gState) {
-    let retVal = [];
-    let nostep = gstate[0] | gstate[1];
-    for (let i = 1; i <= 256; i <<= 1) {
+function aiStepRandomGui(steps) { // véletlenszerűen kiválaszt egy lépést a lehetőségek közül
+    aiStepGui(steps[Math.floor(Math.random() * steps.length)]);
+}
 
+
+function aiStep() {
+    if (aiWorker == null) {
+        aiWorker = new Worker(aiWorkerFN);
+        aiWorker.onmessage = aiWorkerOnMessage;
     }
+    aiWorker.postMessage({
+        gState: gameState,
+        player: currentPlayer,
+        depth: aiDepth[currentPlayer],
+        winStates: winStates,
+        looseChooseDepth: looseChooseDepth,
+        timeout: aiTimeout[currentPlayer]
+    });
+}
+
+function aiWorkerOnMessage(e) {
+    let obj = e.data;
+    if (obj.gState[0] == gameState[0] && obj.gState[1] == gameState[1] && obj.player == currentPlayer && aiPlayer[currentPlayer] && obj.depth == aiDepth[currentPlayer])
+        aiStepRandomGui(obj.result);
 }
