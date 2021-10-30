@@ -3,7 +3,8 @@ const cellDivs = new Array(9).fill(null);
 const cellSpans = new Array(9).fill(null);
 const spanResult = document.querySelector("#result");
 const playersymbol = document.querySelector("#playersymbol");
-const checkAi = document.querySelector("#aiplayer");
+const checkAi1 = document.querySelector("#aiplayer1");
+const checkAi2 = document.querySelector("#aiplayer2");
 const checkQmode = document.querySelector("#qmark");
 const checkBlind = document.querySelector("#blind");
 //powers of 2
@@ -22,7 +23,7 @@ const aiStepCN = 'aistep';
 //Player class name selector
 const playerCN = [player1CN, player2CN]
 
-const winStates = [
+const winStatesDefault = [
     1 << 0 | 1 << 1 | 1 << 2,
     1 << 3 | 1 << 4 | 1 << 5,
     1 << 6 | 1 << 7 | 1 << 8,
@@ -32,6 +33,9 @@ const winStates = [
     1 << 0 | 1 << 4 | 1 << 8,
     1 << 2 | 1 << 4 | 1 << 6
 ];
+
+//Akár meg is lehetne változtatni!
+let winStates = winStatesDefault;
 ///zero based, 0: player1 , 1: player2
 let currentPlayer = 0;
 let startPlayer = 0;
@@ -44,7 +48,8 @@ let gameState = [0, 0];
 let numpadEnable = true;
 let numpadPressed = 0;
 
-let aiplayer = -1;
+let aiplayer = [false, false];
+let aiTimeout = [200, 200];
 let stopper = [0, 0];
 let stopWatch = 0;
 
@@ -83,7 +88,8 @@ function keydown(ev) {
             if (numpadPressed == nidx) {
                 let cell = cellDivs[idx];
                 mousedonwCell(cell);
-                cell.classList.add(numpadCN);
+                if (!aiplayer[currentPlayer])
+                    cell.classList.add(numpadCN);
             }
         }
     }
@@ -102,7 +108,7 @@ function keyup(ev) {
                 clickCell(cell);
             } else {
                 cell = cellDivs[idx];
-                if (freeCell(cell))
+                if (isFree(cell))
                     getSpan(cell).textContent = "";
             }
             numpadPressed &= ~(nidx);
@@ -155,8 +161,8 @@ function getstopper(player) {
 
 function nextShow() {
     let str = `player ${currentPlayer + 1} (${symbol[currentPlayer]}) next, `;
-    str += " player 1 time: " + (getstopper(0) / 1000).toFixed(1) + " s, ";
-    str += " player 2 time: " + (getstopper(1) / 1000).toFixed(1) + " s";
+    str += " player 1 time: " + (getstopper(0) / 1000).toFixed(2) + " s, ";
+    str += " player 2 time: " + (getstopper(1) / 1000).toFixed(2) + " s";
     playersymbol.textContent = str;;
 }
 
@@ -169,7 +175,7 @@ function mousedown(ev) {
 }
 
 function mousedonwCell(cell) {
-    if (isFree(cell)) {
+    if (isFree(cell) && !aiplayer[currentPlayer]) {
         getSpan(cell).textContent = qmark || symbol[currentPlayer];
     } else
         cell.classList.remove(aiStepCN); // if user click, do not animate aistep more.
@@ -207,7 +213,7 @@ function click(ev) {
 }
 
 function modeCheckbox(ev) {
-    aiplayer = checkAi.checked ? 1 : -1;
+    aiplayer = [checkAi1.checked, checkAi2.checked];
     aiStep();
     qmark = checkQmode.checked ? "?" : null;
     blindmode = checkBlind.checked;
@@ -226,7 +232,7 @@ function modeCheckbox(ev) {
 }
 
 function clickCell(cell) {
-    if (isFree(cell)) {
+    if (isFree(cell) && !aiplayer[currentPlayer]) {
         Step(cell);
     }
 }
@@ -255,10 +261,10 @@ function checkEndGame() {
 }
 
 function getplayerName(player) {
-    if (player == aiplayer)
-        return 'Computer';
+    if (aiplayer[player])
+        return `Computer #${player + 1}`;
     else
-        return `Player ${player + 1}`;
+        return `Player #${player + 1}`;
 }
 
 function winPlayer(player, winline) {
@@ -303,41 +309,45 @@ function winState(state) {
     return winStates.find(win => (state & win) == win);
 }
 
-function log2(x) {
+function log2i(x) {
     return pow2.indexOf(x);
 }
 
-function aiStep() {
-    if (currentPlayer == aiplayer) {
-        let nostep = gameState[0] | gameState[1];
-        let possible = [];
-        let wrong = [];
-        let goodstep = 0;
-        for (let i = 1; i <= 256; i <<= 1) {
-            if (!(nostep & i)) {
-                if (winState(i | gameState[aiplayer]))
-                    goodstep = i;
-                possible.push(i);
-                let nostep2 = i | nostep;
-                for (let j = 1; j <= 256; j <<= 1) {
-                    if (!(nostep2 & j) && winState(j | gameState[aiplayer ^ 1])) {
-                        wrong.push(i);
-                        break;
+function aiStep(timermode = true) {
+    if (aiplayer[currentPlayer]) {
+        if (timermode && aiTimeout[currentPlayer])
+            setTimeout(() => aiStep(false), aiTimeout[currentPlayer]);
+        else {
+            let nostep = gameState[0] | gameState[1];
+            let possible = [];
+            let wrong = [];
+            let goodstep = 0;
+            for (let i = 1; i <= 256; i <<= 1) {
+                if (!(nostep & i)) {
+                    if (winState(i | gameState[currentPlayer]))
+                        goodstep = i;
+                    possible.push(i);
+                    let nostep2 = i | nostep;
+                    for (let j = 1; j <= 256; j <<= 1) {
+                        if (!(nostep2 & j) && winState(j | gameState[currentPlayer ^ 1])) {
+                            wrong.push(i);
+                            break;
+                        }
                     }
                 }
             }
+            let step;
+            if (goodstep)
+                step = log2i(goodstep);
+            else {
+                if (wrong.length != possible.length)
+                    possible = possible.filter(e => !wrong.includes(e));
+                step = log2i(possible[Math.floor(Math.random() * possible.length)])
+            }
+            let cell = cellDivs[step];
+            cell.classList.add(aiStepCN);
+            Step(cell);
         }
-        let step;
-        if (goodstep)
-            step = log2(goodstep);
-        else {
-            if (wrong.length != possible.length)
-                possible = possible.filter(e => !wrong.includes(e));
-            step = log2(possible[Math.floor(Math.random() * possible.length)])
-        }
-        let cell = cellDivs[step];
-        cell.classList.add(aiStepCN);
-        Step(cell);
     }
 }
 
