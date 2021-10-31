@@ -1,5 +1,6 @@
 :root {
-    font-size: 2vmin;
+    font-size: 1.8vh;
+    font-family: sans-serif;
 }
 
 body {
@@ -18,18 +19,20 @@ button {
     display: block;
     margin-top: 1rem;
     margin-bottom: 20px;
-    width: 30rem;
-    height: 30rem;
+    width: 24rem;
+    height: 24rem;
 }
 
-.controls, h1, .gameholder {
+.controls,
+h1,
+.gameholder {
     margin-left: 2rem;
 }
 
 
 #game {
     background: lightblue;
-    border:  none;
+    border: none;
     box-shadow: 3px 3px 10px grey;
     box-sizing: border-box;
     width: 100%;
@@ -37,15 +40,6 @@ button {
     border-radius: .5rem;
 }
 
-.comments {
-    font-size: 1.2rem;
-    display: block;
-    padding-top: .5rem;
-}
-
-#result {
-    font-size: 2rem;
-}
 
 .cell:nth-child(1) {
     border-radius: .5rem 0 0 0;
@@ -70,11 +64,12 @@ button {
     height: 33.333%;
     text-align: center;
     box-sizing: border-box;
-    line-height: 10rem;
+    line-height: 8rem;
+    transition: background .25s;
 }
 
 .cell span {
-    font-size: 8rem;
+    font-size: 5rem;
     user-select: none;
     pointer-events: none;
     display: inline-block;
@@ -118,7 +113,7 @@ button {
     75% {
         transform: scate(1, 1);
     }
-    
+
     100% {
         transform: scale(1, 1);
     }
@@ -132,7 +127,7 @@ button {
     50% {
         transform: scale(1.5, 1.5);
     }
-    
+
     100% {
         transform: scale(1, 1);
     }
@@ -143,23 +138,24 @@ button {
     animation: animation_aistep .5s 1;
 }
 
-.cell:active span, .cell.numpad span {
+.cell:active span,
+.cell.numpad span {
     animation: animation_disabe .1s infinite;
 }
 
-.cell.blind span{
+.cell.blind span {
     color: transparent;
     transition: color .3s;
     transition-delay: .3s;
 }
 
 
-.cell.freecell:active span, .cell.freecell.numpad span {
+.cell.freecell:active span,
+.cell.freecell.numpad span {
     transform: scale(1.5, 1.5);
     transition: transform .15s;
     animation: none;
 }
-
 
 .cell.win span {
     animation: animation_win .5s infinite;
@@ -181,14 +177,109 @@ button {
     background: rgb(160, 210, 210);
 }
 
-.cell:nth-child(2n).win, .cell:nth-child(2n).win:hover {
+.cell:nth-child(2n).win,
+.cell:nth-child(2n).win:hover {
     background: rgb(190, 150, 150);
 }
 
-.cell:nth-child(2n+1).win, .cell:nth-child(2n+1).win:hover {
+.cell:nth-child(2n+1).win,
+.cell:nth-child(2n+1).win:hover {
     background: rgb(210, 150, 150);
 }
 
+.comments {
+    font-size: 1.2rem;
+    display: block;
+    padding-top: .5rem;
+}
+
+#result {
+    font-size: 2rem;
+}
+
+.players {
+    font-size: 1.6rem;
+    display: block;
+    background: rgb(139, 177, 179);
+    width: 24rem;
+    box-shadow: .1em .1em .1em gray;
+    border-radius: .2em;
+}
+
+.players .comments {
+    display: block;
+    text-align: center;
+}
+
+.player {
+    margin: 1%;
+    box-sizing: border-box;
+}
+
+.players .player {
+    display: inline-block;
+    width: 47%;
+    /* background: white; */
+}
+
+.player1 .pcontent {
+    text-align: right;
+    margin-right: .1em;
+}
+
+.player1 .wins::after {
+    content: ":";
+    position: absolute;
+    padding-left: .25em;
+    margin-top: -.1em;
+}
+
+.player2 .pcontent {
+    text-align: left;
+    margin-left: .1em;
+}
+
+.player select {
+    font-size: .5em;
+}
+
+.time {
+    font-size: .8em;
+}
+
+.players .center {
+    font-size: .5em;
+    display: block;
+    margin: auto;
+    padding: .5em
+}
+
+.players .center .draws {
+    display: block;
+    margin: auto;
+    font-size: 1.6rem;
+    text-align: center;
+}
+
+.players .center button {
+    text-align: center;
+    margin-left:auto;
+    margin-right: auto;
+    margin-top: .5em;
+    display: block;
+    margin-bottom: .5em;
+}
+
+.players .center .options {
+    display: block;
+    margin: auto;
+    text-align: center;
+}
+
+.players .center .options * {
+    margin: .25em;
+    font-size: .95em;
+}
 
 /*
 checkbox
@@ -196,13 +287,15 @@ checkbox
 
 input.tgl-btn3 {
     display: none;
+    text-align: left;
 }
 
-input.tgl-btn3 + label.tgl-btn3 {
+input.tgl-btn3+label.tgl-btn3 {
     user-select: none;
+    text-align: left;
 }
 
-input.tgl-btn3 + label.tgl-btn3 div.tgl-btn3{
+input.tgl-btn3+label.tgl-btn3 div.tgl-btn3 {
     display: inline-block;
     position: relative;
     background-color: #f0f0f0;
@@ -216,12 +309,13 @@ input.tgl-btn3 + label.tgl-btn3 div.tgl-btn3{
     user-select: none;
     transition: background-color .3s
 }
-input.tgl-btn3:checked + label.tgl-btn3 div.tgl-btn3{
+
+input.tgl-btn3:checked+label.tgl-btn3 div.tgl-btn3 {
     background-color: #9fd6ae;
     transition: background-color .3s
 }
 
-input.tgl-btn3 + label.tgl-btn3 div.tgl-btn3::before {
+input.tgl-btn3+label.tgl-btn3 div.tgl-btn3::before {
     display: inline-block;
     position: relative;
     box-sizing: border-box;
@@ -237,7 +331,7 @@ input.tgl-btn3 + label.tgl-btn3 div.tgl-btn3::before {
     transition-property: left border;
 }
 
-input.tgl-btn3:checked + label.tgl-btn3 div.tgl-btn3::before {
+input.tgl-btn3:checked+label.tgl-btn3 div.tgl-btn3::before {
     background-color: #fff;
     left: 1em;
     border: 2px solid #9fd6ae;

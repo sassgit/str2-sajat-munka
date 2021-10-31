@@ -16,27 +16,71 @@
         </div>
     </div>
     <div class="controls">
-        <button onclick="replayButtonClick()">Start a new game</button>
-        <span id="result"></span>
-        <div class="comments"></div>
-        <input id="aiplayer1" class="tgl-btn3" type="checkbox" onclick="modeCheckbox()" />
-        <label for="aiplayer1" class="tgl-btn3">
-            <div class="tgl-btn3"></div> Ai player 1
-        </label>
-        <input id="aiplayer2" class="tgl-btn3" type="checkbox" onclick="modeCheckbox()" />
-        <label for="aiplayer2" class="tgl-btn3">
-            <div class="tgl-btn3"></div> Ai player 2
-        </label>
-        <input id="qmark" class="tgl-btn3" type="checkbox" onclick="modeCheckbox()" />
-        <label for="qmark" class="tgl-btn3">
-            <div class="tgl-btn3"></div> All '?' mode
-        </label>
-        <input id="blind" class="tgl-btn3" type="checkbox" onclick="modeCheckbox()" />
-        <label for="blind" class="tgl-btn3">
-            <div class="tgl-btn3"></div>Blind mode
-        </label>
-        <div id="playersymbol" class="comments"></div>
-        <div class="comments">Numeric pad can also be used for control.</div>
+        <div class="players">
+            <div class="comments">
+                <span id="result"></span>
+            </div>
+            <div class="player player1">
+                <div class="pcontent">
+                    <div class="control">
+                        <select name="p1mode" id="p1mode">
+                            <option value="mousenumpad">Mouse|NumPad</option>
+                            <option value="mouse">Mouse</option>
+                            <option value="numpad">NumPad</option>
+                            <option value="computer">Computer</option>
+                        </select>
+                        <select name="ai1depth" id="ai1depth"></select>
+                    </div>
+                    <div class="time">0</div>
+                    <div class="wins">0</div>
+                </div>
+            </div>
+            <div class="player player2">
+                <div class="pcontent">
+                    <div class="control">
+                        <select name="p2mode" id="p2mode">
+                            <option value="mousenumpad">Mouse|NumPad</option>
+                            <option value="mouse">Mouse</option>
+                            <option value="numpad">NumPad</option>
+                            <option value="computer">Computer</option>
+                        </select>
+                        <select name="ai2depth" id="ai2depth"></select>
+                    </div>
+                    <div class="time">0</div>
+                    <div class="wins">0</div>
+                </div>
+            </div>
+            <div class="center">
+                <div class="draws">Draw: 0 game</div>
+                <button onclick="replayButtonClick()">Start a new game</button>
+                <div class="options">
+                    <input id="flipp" class="tgl-btn3" type="checkbox" checked />
+                    <label for="flipp" class="tgl-btn3">
+                        <div class="tgl-btn3"></div> Flip players
+                    </label>
+                    <input id="qmark" class="tgl-btn3" type="checkbox" onclick="modeCheckbox()" />
+                    <label for="qmark" class="tgl-btn3">
+                        <div class="tgl-btn3"></div> '?' mode
+                    </label>
+                    <input id="blind" class="tgl-btn3" type="checkbox" onclick="modeCheckbox()" />
+                    <label for="blind" class="tgl-btn3">
+                        <div class="tgl-btn3"></div>Blind mode
+                    </label>
+                </div>
+                <div class="options">
+                    <input id="fastai" class="tgl-btn3" type="checkbox" onclick="modeCheckbox()" />
+                    <label for="fastai" class="tgl-btn3">
+                        <div class="tgl-btn3"></div>Fast Computer.
+                    </label>
+                    <input id="loop" class="tgl-btn3" type="checkbox" onclick="checkLoopChange()" />
+                    <label for="loop" class="tgl-btn3">
+                        <div class="tgl-btn3"></div>Loop
+                    </label>
+                </div>
+            </div>
+        </div>
+
+
         <script src="assets/js/main.js"></script>
     </div>
 </body>
