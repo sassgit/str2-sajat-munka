@@ -1,3 +1,4 @@
+
 const resultSpan = document.querySelector('#result');
 const modalContents = document.querySelectorAll('.modal-content')
 Array.from(document.querySelectorAll('.button-container button')).forEach(btn => btn.addEventListener('click', () => resultSpan.textContent = ''));
