@@ -1,34 +1,31 @@
-@keyframes animation1 {
+
+@keyframes animation-container-show {
   from {
     background-color: transparent;
   }
 
 }
 
-@keyframes animation2 {
+@keyframes animation-container-hide {
+  from {
+    background-color: #00000066;
+  }
+  
+  to {
+    background-color: transparent;
+  }
+}
+
+@keyframes animation-content-show {
   from {
     transform: scale(.10, .1) rotate(-180deg);
   }
 }
 
-@keyframes animation1b {
-  from {
-    background-color: #00000066;
-  }
-
-  to {
-    background-color: transparent;
-  }
-}
-
-@keyframes animation2b {
+@keyframes animation-content-hide {
   to {
     transform: scale(0.01, 1);
   }
-}
-
-.resultDiv {
-  margin-top: 1em;
 }
 
 .modal-container {
@@ -41,13 +38,13 @@
   height: 100%;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
-  animation-name: animation1;
+  animation-name: animation-container-show;
   animation-duration: .5s;
   user-select: none;
 }
 
 .modal-container-end {
-  animation-name: animation1b;
+  animation-name: animation-container-hide;
 }
 
 
@@ -61,7 +58,7 @@
   padding: .5em;
   border-radius: .5em;
   border: 1px solid #888;
-  animation-name: animation2;
+  animation-name: animation-content-show;
   animation-duration: .5s;
   box-sizing: border-box;
   width: 100%;
@@ -132,7 +129,7 @@
 }
 
 .modal-content-end {
-  animation-name: animation2b;
+  animation-name: animation-content-hide;
 }
 
 .modal-footer {
