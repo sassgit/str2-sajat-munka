@@ -1,4 +1,4 @@
-const consoleLogEnable = true;
+const consoleLogEnable = false;
 
 let resolveFunction;
 
