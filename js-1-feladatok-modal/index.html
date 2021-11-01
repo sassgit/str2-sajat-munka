@@ -1,43 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="assets/modal/modal.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
+
 <body>
     <h1>Simple modal demonstration</h1>
-    <button id="modalbtn" onclick="modalbtnClick(0)">Open Modal</button>
-    <button id="modalbtn" onclick="modalbtnClick(1)">Open Modal (Promise)</button>
+    <div class="button-container">
+        <button id="modalbtn" onclick="showModal()">Modal #1</button>
+        <button id="modalbtn" onclick="modalbtnClick(0)">Modal #1 (Promise)</button>
+        <button id="modalbtn" onclick="modalbtnClick(1)">Modal #2 (Promise)</button>
+        <button id="modalbtn" onclick="modalbtnClick(2)">Modal #3 (Promise)</button>
+        <button id="modalbtn" onclick="testAsync()">Modal #4 (await)</button>
+    </div>
     <div class="resultDiv">
         <span id="result"></span>
     </div>
-    <!-- modal -->
-    <div id="myModal" class="modal-container">
-        <div id="myModal-content" class="modal-content">
+    <!-- modal #1 -->
+    <div class="modal-container">
+        <div class="modal-content">
             <header class="modal-header">
                 <div>
-                    Title
-                    <button class="modal-close">&times;</button>
+                    <div class="modal-title">Modal 1 title</div>
+                    <button class="modal-btn modal-close">&times;</button>
                 </div>
             </header>
             <main class="modal-main">
                 <div>
-                    <p>Message</p>
+                    <h3>Message 1</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam et nibh in sem convallis
+                        faucibus. Praesent massa ipsum, ultrices nec fermentum nec, luctus vel odio. In malesuada mauris
+                        sed nulla pulvinar porttitor.
+                    </p>
                 </div>
             </main>
             <footer>
                 <div class="modal-footer">
-                    <button class="modal-btn">Mégsem</button>
-                    <button class="modal-btn">Ok.</button>
-                    <h4 class="modal-footer">Footer</h4>
+                    <button class="modal-btn modal-btn-cancel">Cancel</button>
+                    <button class="modal-btn modal-btn-ok">Ok.</button>
+                    <!-- <h4 class="modal-footer">Footer</h4> -->
                 </div>
             </footer>
         </div>
     </div>
+    <!-- modal #2 -->
+    <div class="modal-container">
+        <div class="modal-content">
+            <header class="modal-header">
+                <div>
+                    <div class="modal-title">Modal 2 title</div>
+                    <button class="modal-btn modal-close">&times;</button>
+                </div>
+            </header>
+            <main class="modal-main">
+                <div>
+                    <h3>Message 2</h3>
+                    <p>Cras vel quam congue, commodo magna sit amet, blandit arcu. Aliquam finibus lorem sit amet arcu
+                        molestie dapibus.
+                    </p>
+                </div>
+            </main>
+            <footer>
+                <div class="modal-footer">
+                    <button class="modal-btn modal-btn-cancel">Cancel</button>
+                    <button class="modal-btn modal-btn-ok">Ok.</button>
+                    <!-- <h4 class="modal-footer">Footer</h4> -->
+                </div>
+            </footer>
+        </div>
+    </div>
+    <!-- modal #3 -->
+    <div class="modal-container">
+        <div class="modal-content">
+            <header class="modal-header">
+                <div>
+                    <div class="modal-title">Modal 3 title</div>
+                    <button class="modal-btn modal-close">&times;</button>
+                </div>
+            </header>
+            <main class="modal-main">
+                <div>
+                    <h3>Message 3</h3>
+                    <p>Sed ut tellus pharetra, lobortis orci id, iaculis erat. Nullam vestibulum nulla purus, non
+                        molestie massa suscipit et.
+                    </p>
+                </div>
+            </main>
+            <footer>
+                <div class="modal-footer">
+                    <button class="modal-btn modal-btn-cancel">Cancel</button>
+                    <button class="modal-btn modal-btn-ok">Ok.</button>
+                    <button class="modal-btn">3</button>
+                    <button class="modal-btn">2</button>
+                    <button class="modal-btn">1</button>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <!-- modal #4 -->
+    <div class="modal-container">
+        <div class="modal-content">
+            <header class="modal-header">
+                <div>
+                    <div class="modal-title">Async Modal Example</div>
+                    <button class="modal-btn modal-close">&times;</button>
+                </div>
+            </header>
+            <main class="modal-main">
+                <div>
+                    <h3>Async Modal</h3>
+                    <p>Please select an option!</p>
+                    <button class="modal-btn">Option 1</button>
+                    <button class="modal-btn">Option 2</button>
+                    <button class="modal-btn">Option 3</button>
+                </div>
+            </main>
+            <footer>
+                <div class="modal-footer">
+                    <button class="modal-btn modal-btn-cancel">Cancel</button>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <!-- modal #5 -->
+    <div class="modal-container">
+        <div class="modal-content">
+            <header class="modal-header">
+                <div>
+                    <div class="modal-title">Async Modal Example</div>
+                    <button class="modal-btn modal-close">&times;</button>
+                </div>
+            </header>
+            <main class="modal-main">
+                <div>
+                    <p></p>
+                </div>
+            </main>
+            <footer>
+                <div class="modal-footer">
+                    <button class="modal-btn modal-btn-ok">Ok</button>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <!-- modal #6 -->
+    <div class="modal-container">
+        <div class="modal-content">
+            <header class="modal-header">
+                <div>
+                    <div class="modal-title">Async Modal Example</div>
+                    <button class="modal-btn modal-close">&times;</button>
+                </div>
+            </header>
+            <main class="modal-main">
+                <div>
+                    <p>Do you want a new choose?</p>
+                </div>
+            </main>
+            <footer>
+                <div class="modal-footer">
+                    <button class="modal-btn modal-btn-cancel">No</button>
+                    <button class="modal-btn modal-btn-ok">Yes</button>
+                </div>
+            </footer>
+        </div>
+    </div>
+    
     <script src="assets/js/main.js"></script>
     <script src="assets/modal/modal.js"></script>
 </body>
+
 </html>

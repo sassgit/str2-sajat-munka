@@ -1,0 +1,31 @@
+:root {
+    font-size: 12px;
+    font-family: sans-serif;
+}
+
+body {
+    padding: 2rem;
+    background: lightgray;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+button {
+    font-size: 2rem;
+    margin: .25rem;
+    padding: .5rem;
+    border-radius: .75rem;
+}
+
+#result {
+    font-size: 2rem;
+    padding: .25rem;
+}
+
+
+@media (min-width: 561px) {
+    :root {
+      font-size: 16px;
+    }

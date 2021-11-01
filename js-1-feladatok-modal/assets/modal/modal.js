@@ -1,60 +1,73 @@
-const modalContainer = document.getElementById("myModal");
-const modalContent = document.getElementById("myModal-content");
-const modalXclose = document.getElementsByClassName("modal-close")[0];
-const modalButtons = document.getElementsByClassName("modal-btn");
-const idConversion = ['U', '0', 'O', 'C', 'X', 'E']; // null -> -1, undefined -> 0, "" -> 1, Ok -> 2, Cancel -> 3, Xbutton -> 4, External -> 5 
-let resolveFunc;
+const consoleLogEnable = false;
 
-function modalMessage(msg) {
-    this.msg = msg;
-    msg = (msg + "0").toString();
-    this.id = idConversion.indexOf(msg.toUpperCase()[0]) - 2; // null -> -3, undefined -> -2, "" -> -1, Ok -> 0, Cancel -> 1, Xbutton -> 2, External -> 3
-}
-modalMessage.prototype.toString = function () {
-    return this.msg;
-}
+let resolveFunction;
 
-function showModal() {
-    modalContainer.style.display = "block";
-    return new Promise(f => resolveFunc = f);
-}
-
-modalContainer.addEventListener("animationend", () => {
-    if (modalContainer.classList.contains("modal-container-end")) {
-        modalContainer.style.display = "none";
-        modalContainer.classList.remove("modal-container-end");
-        modalContent.classList.remove("modal-content-end");
+class modalMessage {
+    constructor(id, msg) {
+        this.id = id;
+        this.msg = msg;
     }
-});
-
-for (let e of modalButtons)
-    (e.addEventListener("click", e => endmodal(e)));
-
-
-
-function sendMessage(message) {
-    let mObj = new modalMessage(message);
-    resolveFunc(mObj);
-    console.log(mObj);
+    toString() {
+        return `(${this.id}) this.msg`;
+    }
 }
 
-function endmodal(e) {
-    modalContainer.classList.add("modal-container-end");
-    modalContent.classList.add("modal-content-end");
-    if (typeof e != "object")
-        sendMessage("External click close");
-    else if (e.srcElement == modalXclose)
-        sendMessage("X close");
-    else if (e.srcElement == modalButtons[0])
-        sendMessage("Cancel");
-    else if (e.srcElement == modalButtons[1])
-        sendMessage("Ok");
+
+function endModal(modalContainer, modalContent, id, message) {
+    modalContainer.classList.add('modal-container-end');
+    modalContent.classList.add('modal-content-end');
+    let mObj = new modalMessage(id, message);
+    resolveFunction(mObj);
+    if (consoleLogEnable)
+        console.log(modalContent, mObj);
 }
 
-modalXclose.onclick = function (e) {
-    endmodal(e);
-}
+function showModal(modalContent) {
+    if (!modalContent)
+        modalContent = document.querySelector('.modal-container .modal-content');
+    const modalContainer = modalContent.parentElement;
+    const xButton = modalContent.querySelector('.modal-close');
+    const okButton = modalContent.querySelector('.modal-btn-ok');
+    const cancelButton = modalContent.querySelector('.modal-btn-cancel');
 
-window.addEventListener("click", function (event) {
-    if (event.target == modalContainer) endmodal();
-});
+    const builtinButtons = [xButton, okButton, cancelButton].filter(e => e);
+    const customButtons = Array.from(modalContent.querySelectorAll('.modal-btn')).filter(butt => !builtinButtons.includes(butt));
+    const allbuttons = [...builtinButtons, ...customButtons];
+
+    const buttonHandler = (e) => {
+        if (xButton && e.target == xButton)
+            endModal(modalContainer, modalContent, 2, "X close");
+        else if (cancelButton && e.target == cancelButton)
+            endModal(modalContainer, modalContent, 1, "Cancel");
+        else if (okButton && e.target == okButton)
+            endModal(modalContainer, modalContent, 0, "Ok button");
+        else if (customButtons.includes(e.target)) {
+            let idx = customButtons.indexOf(e.target);
+            endModal(modalContainer, modalContent, idx + 100, `Custom button #${idx}`);
+        }
+    }
+
+    const containerHandler = (e) => {
+        if (e.target == modalContainer)
+            endModal(modalContainer, modalContent, 3, "External click close");
+    }
+
+
+    allbuttons.forEach(butt => butt.onclick = buttonHandler);
+    modalContainer.onclick = containerHandler;
+
+    modalContainer.onanimationend = () => {
+        if (modalContainer.classList.contains("modal-container-end")) {
+            modalContainer.style.display = "none";
+            modalContainer.classList.remove("modal-container-end");
+            modalContent.classList.remove("modal-content-end");        
+            allbuttons.forEach(butt => butt.onclick = null);
+            modalContainer.onclick = null;
+        }
+    }
+    //ha egy előző megjelenítés animáció még nem zajlott volna le teljesen.
+    modalContainer.onanimationend();
+
+    modalContainer.style.display = "block";
+    return new Promise(f => resolveFunction = f);
+}
