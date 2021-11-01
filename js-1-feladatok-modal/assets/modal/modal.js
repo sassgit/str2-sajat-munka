@@ -1,4 +1,4 @@
-const consoleLogEnable = false;
+const consoleLogEnable = true;
 
 let resolveFunction;
 
@@ -8,7 +8,7 @@ class modalMessage {
         this.msg = msg;
     }
     toString() {
-        return `(${this.id}) this.msg`;
+        return `(${this.id}) ${this.msg}`;
     }
 }
 
@@ -43,7 +43,7 @@ function showModal(modalContent) {
             endModal(modalContainer, modalContent, 0, "Ok button");
         else if (customButtons.includes(e.target)) {
             let idx = customButtons.indexOf(e.target);
-            endModal(modalContainer, modalContent, idx + 100, `Custom button #${idx}`);
+            endModal(modalContainer, modalContent, idx + 100, `Custom button ${idx}`);
         }
     }
 
