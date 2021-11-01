@@ -31,7 +31,6 @@ h1,
 
 
 #game {
-    background: lightblue;
     border: none;
     box-shadow: 3px 3px 10px grey;
     box-sizing: border-box;
@@ -81,19 +80,19 @@ h1,
 
 @keyframes animation_disabe {
     0% {
-        transform: rotate(0deg);
+        transform: rotate(0deg) scaleY(1.5);
     }
 
     25% {
-        transform: rotate(-10deg);
+        transform: rotate(-10deg) scaleY(1.5);
     }
 
     75% {
-        transform: rotate(10deg);
+        transform: rotate(10deg) scaleY(1.5);
     }
 
     100% {
-        transform: rotate(0deg);
+        transform: rotate(0deg) scaleY(1.5);
     }
 }
 
@@ -104,14 +103,6 @@ h1,
 
     25% {
         transform: scale(.5, .5);
-    }
-
-    50% {
-        transform: scate(1.5, 1.5);
-    }
-
-    75% {
-        transform: scate(1, 1);
     }
 
     100% {
@@ -161,6 +152,11 @@ h1,
     animation: animation_win .5s infinite;
 }
 
+.cell.backstep span {
+    transform: scale(0, 0);
+    transition: transform .3s;
+}
+
 .cell:nth-child(2n) {
     background: rgb(190, 190, 190);
 }
@@ -194,7 +190,7 @@ h1,
 }
 
 #result {
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 
 .players {
@@ -206,6 +202,12 @@ h1,
     border-radius: .2em;
 }
 
+.pname {
+    font-size: 1rem;
+    box-shadow: 0 .05em .1em gray;
+    border-radius: .1em;
+}
+
 .players .comments {
     display: block;
     text-align: center;
@@ -213,6 +215,9 @@ h1,
 
 .player {
     margin: 1%;
+    border-radius: .1em;
+    background: rgb(255, 255, 255, .1);
+    box-shadow: .03em .1em .1em gray;
     box-sizing: border-box;
 }
 
@@ -241,7 +246,9 @@ h1,
 
 .player select {
     font-size: .5em;
+    background: rgb(255, 255, 255, .5);
 }
+
 
 .time {
     font-size: .8em;
@@ -261,13 +268,23 @@ h1,
     text-align: center;
 }
 
-.players .center button {
+.players .center .button {
     text-align: center;
-    margin-left:auto;
+    margin-left: auto;
     margin-right: auto;
     margin-top: .5em;
     display: block;
     margin-bottom: .5em;
+    border-radius: .4em;
+}
+
+.players .center .button-small {
+    display: inline;
+    font-size: 1em;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: .1em;
+    margin-right: .1em;
 }
 
 .players .center .options {

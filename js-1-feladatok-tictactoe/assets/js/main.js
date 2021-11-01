@@ -6,6 +6,8 @@ const gameDiv = document.querySelector("#game");
 const cellDivs = new Array(9).fill(null);
 const cellSpans = new Array(9).fill(null);
 const spanResult = document.querySelector("#result");
+const p1NameDiv = document.querySelector(".player1 .pname");
+const p2NameDiv = document.querySelector(".player2 .pname");
 const checkQmode = document.querySelector("#qmark");
 const checkBlind = document.querySelector("#blind");
 const checkLoop = document.querySelector("#loop");
@@ -20,6 +22,7 @@ const p2TimeDiv = document.querySelector('.player2 .time');
 const p1WinsDiv = document.querySelector('.player1 .wins');
 const p2WinsDiv = document.querySelector('.player2 .wins');
 const drawsDiv = document.querySelector('.players .draws');
+const newGameQuestionForm = document.querySelector('#newGameQuestion');
 //powers of 2
 const pow2 = [1, 2, 4, 8, 16, 32, 64, 128, 256];
 //Numpad controls
@@ -33,6 +36,7 @@ const player2CN = 'player2';
 const blindCN = 'blind';
 const winCN = 'win';
 const aiStepCN = 'aistep';
+const backStepCN = 'backstep';
 //Player class name selector
 const playerCN = [player1CN, player2CN]
 
@@ -60,6 +64,18 @@ const maxAiDepth = 8;
 //vége a játéknak. Én a teszteknél mindig bekapcsolt működéssel használtam (nem volt sokáig ez a kapcsoló benne a kódban)
 let StartNewGameAlwaysEnabled = false;
 
+//Loop módban ennyit vár, mielőtt új játékot kezdene.
+let loopWaitTime = 1500;
+
+//loop timeout handle, hogy ha annak futása alatt nyomjuk meg a "start a new game" gombot, akkor le lehessen állítani a timer-t, hogy ne 
+//kétszer induljon el a játék.
+let loopTimeoutHandle = 0;
+
+//backstep esetén timeout-al lép a gép, ha a gép lenne soron.
+let backStepTimeoutHandle = 0;
+
+//Ennyi ideig vár a backstep, mielőtt lépne az ai, ha ő lenne a backstep miatt soron.
+let backStepTimeoutValue = 1000;
 
 //A console diagnosztikai üzenetek engedélyezése
 let logEnable = false;
@@ -82,7 +98,7 @@ let qmark = null;
 //Vakjáték üzemmód kapcsoló
 let blindmode = false;
 //A játékosok által használt karakter, akár meg is lehetne változtatni.
-let symbol = ['0', 'X'];
+let symbol = ['O', 'X'];
 
 //Játék aktuális állapota binárisan. A két játékos külön szám, a megfelelő bit jelzi a foglalt mezőt, ezért gameState[0] & gameState[1] == 0, mivel egy mezőt nem foglalhat két játokos.
 //A JS képességei miatt (32 bites számként kezeli a bináris műveleteket) jelen kód némi kiegészítéssel  akár (az ai is) 32 mezőt tudna lekezelni max (pl 8x4-es tábla).
@@ -126,7 +142,7 @@ init();
 
 //-------------------------------------------------------------------------------------------------------
 // Itt befejeződik a konstansok, kezdeti változók deklarálása és definiálása és init() függvényhívás.
-// Ez alatt már csak olyan függvények vannak amelyek a GUI által callback, illetve egymásból hívódik meg.
+// Ez alatt már csak olyan függvények vannak amelyek callback, illetve egymásból hívódik meg.
 //-------------------------------------------------------------------------------------------------------
 
 
@@ -178,10 +194,10 @@ function init() {
 }
 
 /**
- * A loop checkbox eseménykezelője.
+ * A loop checkbox eseménykezelője. Ha vége a játéknak, akkor el is kezdi az új játékot.
  */
 function checkLoopChange() {
-    if (checkLoop.checked)
+    if (checkLoop.checked && gameEnd)
         gameReset();
 }
 
@@ -213,7 +229,7 @@ function modeCheckbox() {
         else
             cell.classList.remove(blindCN);
         let span = getSpan(cell);
-        if (qmark) {
+        if (qmark && !gameEnd) {
             if (span.textContent)
                 span.textContent = qmark;
         } else
@@ -278,9 +294,10 @@ function delnumpadclass() {
 
 /**
  * Újrajátszás gomb click eseménye
+ * Ha StartNewGameAlwaysEnabled nem true, és játékban van, akkor a showModal-al megkérdezi, hogy 
  */
-function replayButtonClick() {
-    if (StartNewGameAlwaysEnabled || gameEnd)
+async function replayButtonClick() {
+    if (gameEnd || StartNewGameAlwaysEnabled || !(await showModal(newGameQuestionForm)).id)
         gameReset();
 }
 
@@ -299,15 +316,75 @@ function freeAllCells() {
 }
 
 /**
- * Egy adott cella felszabadítása (csak az összes cella felszabadítása hívja meg)
+ * 
  */
-function freeCell(cell) {
+
+/**
+ * Egy adott cella felszabadítása (csak az összes cella felszabadítása hívja meg)
+ * @param {*} cell 
+ * @param {*} textclear ha true, akkor a cellában lévő span szövegét is kitörli.
+ */
+function freeCell(cell, textclear = true) {
     cell.classList.add(freeCN);
+    cell.classList.remove(backStepCN);
     cell.classList.remove(player1CN);
     cell.classList.remove(player2CN);
     cell.classList.remove(winCN);
     cell.classList.remove(aiStepCN);
-    getSpan(cell).textContent = "";
+    cell.classList.remove(blindCN);
+    if (textclear)
+        getSpan(cell).textContent = "";
+}
+
+/**
+ * Visszalépést hajt végre egy cellán. Csak a vizualizáció, játékmenetet nem itt vezérlem!
+ * @param {*} cell 
+ */
+function backStepCell(cell) {
+    freeCell(cell, false);
+    cell.classList.add(backStepCN);
+}
+
+/**
+ * Visszalépés függvénye. Kicsit még kísérleti verzió, lehet benne hiba, de első tesztek és hibajavítások alapján úgy tűnt,
+ * hogy jól működik. Lehet, hogy a cellák állapotát (milyen osztályokban vannak) inkább a gameState-ből kellene közvetlenül 
+ * legenerálni. Ez főleg a játék vége visszavonásánál lehet gond, hogy valami esetleg kimarad.
+ */
+function backStep() {
+    let prevstate = [
+        [0, 0], ...gameHistory
+    ][gameHistory.length - 1];
+    if (prevstate) {
+        if (gameEnd) {
+            gameEnd = false;
+            cellDivs.forEach(cell => {
+                cell.classList.remove(winCN);
+                if (!(cell.classList.contains(player1CN) || cell.classList.contains(player2CN)))
+                    cell.classList.add(freeCN);
+                if (blindmode)
+                    cell.classList.add(blindCN);
+                if (qmark)
+                    getSpan(cell).textContent = qmark;
+            });
+        }
+        let cell = cellDivs[log2i((gameState[0] | gameState[1]) ^ (prevstate[0] | prevstate[1]))];
+        freeCell(cell, false);
+        backStepCell(cell);
+        currentPlayer = gameState[0] == prevstate[0] ? 1 : 0;
+        gameState = [...prevstate];
+        gameHistory.pop();
+        nextShow();
+        backStepTimeoutHandling(true);
+    }
+}
+
+function backStepTimeoutHandling(startNewTimer = false) {
+    if (backStepTimeoutHandle) {
+        clearTimeout(backStepTimeoutHandle);
+        backStepTimeoutHandle = 0;
+    }
+    if (startNewTimer)
+        backStepTimeoutHandle = setTimeout(aiStep, backStepTimeoutValue);
 }
 
 /**
@@ -318,6 +395,7 @@ function freeCell(cell) {
  * @param {*} player
  */
 function occupyCell(cell, player) {
+    cell.classList.remove(backStepCN);
     cell.classList.remove(freeCN);
     cell.classList.add(playerCN[player]);
     if (blindmode)
@@ -348,8 +426,11 @@ function getstopper(player) {
 function nextShow() {
     p1WinsDiv.textContent = winCounter[0];
     p2WinsDiv.textContent = winCounter[1];
-    p1TimeDiv.textContent = (getstopper(0) / 1000).toFixed(2);
-    p2TimeDiv.textContent = (getstopper(1) / 1000).toFixed(2);
+    let digits = gameEnd ? 2 : 1;
+    p1TimeDiv.textContent = (getstopper(0) / 1000).toFixed(digits);
+    p2TimeDiv.textContent = (getstopper(1) / 1000).toFixed(digits);
+    p1NameDiv.textContent = getplayerName(0);
+    p2NameDiv.textContent = getplayerName(1);
     drawsDiv.textContent = `Draw: ${drawCounter} game${drawCounter> 1 ? 's' :''}`;
     if (!gameEnd)
         spanResult.textContent = `${getplayerName(currentPlayer)} next`;
@@ -371,6 +452,7 @@ function getSpan(cell) {
 function mousedown(ev) {
     if (ev.button == 0 && mouseEnable[currentPlayer])
         mousedonwCell(ev.target);
+    ev.target.classList.remove(aiStepCN); // Ha a felhasználó kattintott ne menjen tovább az aistep animáció.
 }
 
 /**
@@ -380,6 +462,7 @@ function mousedown(ev) {
  */
 function mousedonwCell(cell) {
     if (isFree(cell) && !aiPlayer[currentPlayer]) {
+        cell.classList.remove(backStepCN);
         getSpan(cell).textContent = qmark || symbol[currentPlayer];
     } else
         cell.classList.remove(aiStepCN); // Ha a felhasználó kattintott ne menjen tovább az aistep animáció.
@@ -419,8 +502,13 @@ function endGameWorks() {
         currentPlayer = startPlayer ^= 1;
     else
         currentPlayer = 0;
-    if (checkLoop.checked)
-        gameReset();
+    if (checkLoop.checked) {
+        if (loopWaitTime <= 0)
+            gameReset();
+        else
+            loopTimeoutHandle = setTimeout(gameReset, loopWaitTime);
+    }
+
 }
 
 /**
@@ -499,7 +587,7 @@ function getplayerName(player) {
     if (aiPlayer[player])
         return `Computer #${player + 1}` + symstr;
     else
-        return `Player #${player + 1}` + symstr;
+        return `Player ${player + 1}` + symstr;
 }
 
 /**
@@ -534,6 +622,9 @@ function drawGame() {
  * A nyert és döntetlen állásokat jelző érékek nem törlődnek.
  */
 function gameReset() {
+    if (loopTimeoutHandle != 0)
+        clearTimeout(loopTimeoutHandle);
+    loopTimeoutHandle = 0;
     currentPlayer = startPlayer;
     freeAllCells();
     delnumpadclass();
@@ -622,6 +713,7 @@ function createPostObj() {
  * Ha a gép van soron, létrehoza a Worker-t (persze csak akkor ha még nincs), és utána üzenetet továbbít PostMessage-el.
  */
 function aiStep() {
+    backStepTimeoutHandling();
     if (!gameEnd && aiPlayer[currentPlayer]) {
         if (aiWorker == null) {
             aiWorker = new Worker(aiWorkerFN);

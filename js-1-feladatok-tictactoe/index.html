@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic-Tac-Toe</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/modal/modal.css">
 </head>
 
 <body>
@@ -22,6 +23,7 @@
             </div>
             <div class="player player1">
                 <div class="pcontent">
+                    <div class="pname">Player 1</div>
                     <div class="control">
                         <select name="p1mode" id="p1mode">
                             <option value="mousenumpad">Mouse|NumPad</option>
@@ -37,6 +39,7 @@
             </div>
             <div class="player player2">
                 <div class="pcontent">
+                    <div class="pname">Player 2</div>
                     <div class="control">
                         <select name="p2mode" id="p2mode">
                             <option value="mousenumpad">Mouse|NumPad</option>
@@ -52,7 +55,7 @@
             </div>
             <div class="center">
                 <div class="draws">Draw: 0 game</div>
-                <button onclick="replayButtonClick()">Start a new game</button>
+                <button class="button" onclick="replayButtonClick()">Start a new game</button>
                 <div class="options">
                     <input id="flipp" class="tgl-btn3" type="checkbox" checked />
                     <label for="flipp" class="tgl-btn3">
@@ -74,14 +77,37 @@
                     </label>
                     <input id="loop" class="tgl-btn3" type="checkbox" onclick="checkLoopChange()" />
                     <label for="loop" class="tgl-btn3">
-                        <div class="tgl-btn3"></div>Loop
+                        <div class="tgl-btn3"></div>Loop games
                     </label>
+                    <button class="button-small" onclick="backStep()">Back step</button>
                 </div>
             </div>
         </div>
 
 
+        <script src="assets/modal/modal.js"></script>
         <script src="assets/js/main.js"></script>
+    </div>
+    <div class="modal-container">
+        <div id="newGameQuestion" class="modal-content">
+            <header class="modal-header">
+                <div>
+                    <div class="modal-title">Start a new game</div>
+                    <button class="modal-btn modal-close">&times;</button>
+                </div>
+            </header>
+            <main class="modal-main">
+                <div>
+                    <p>You are in a game. Do you want to clear it, and start a new one?</p>
+                </div>
+            </main>
+            <footer>
+                <div class="modal-footer">
+                    <button class="modal-btn modal-btn-cancel">No</button>
+                    <button class="modal-btn modal-btn-ok">Yes</button>
+                </div>
+            </footer>
+        </div>
     </div>
 </body>
 
