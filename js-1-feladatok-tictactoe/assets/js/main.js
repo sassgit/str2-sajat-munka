@@ -1,3 +1,4 @@
+'use strict';
 // ai Worker kód fájl neve.
 const aiWorkerFN = 'assets/js/aiworker.js';
 
@@ -38,7 +39,7 @@ const winCN = 'win';
 const aiStepCN = 'aistep';
 const backStepCN = 'backstep';
 //Player class name selector
-const playerCN = [player1CN, player2CN]
+const playerCN = [player1CN, player2CN];
 
 //Alapértelmezett nyertes kombinációk (0-bázisú cellaszámok szerint: sorok: 012, 345, 678, oszlopok: 036, 147, 258, és az átlók: 048, 246)
 const winStatesDefault = [
@@ -174,7 +175,6 @@ function init() {
         gameDiv.appendChild(div);
         cellDivs[i] = div;
         cellSpans[i] = span;
-        return div;
     });
     let aioptionHTML = "";
     for (let i = 0; i <= maxAiDepth; i++)

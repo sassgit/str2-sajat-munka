@@ -1,4 +1,4 @@
-
+'use strict';
 //AI, mely lépések tömbjét adja, melyek már egyenrangú lépések a számítás szerint.
 //A lépés számítás kulcsa a rekurzív stepQuality függvény!
 
