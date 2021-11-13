@@ -1,4 +1,11 @@
 :root {
+  --back-picture: url('../cardimages/image034.png');
+  --back-color:  hsla(244, 100%, 70%, 0.5);
+  --vsize: 25vw;
+  --hsize: 15vw;
+  --bimgsize: 30% 18%;
+  --border-radius: 1.5vw;
+  --transition-speed: .5s;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 16px;
 }
@@ -26,15 +33,16 @@ body {
 
 .card {
   display: inline-block;
-  border-radius: 2vw;
+  border-radius: var(--border-radius);
   margin: 1vw;
   box-sizing: border-box;
+  perspective: 100vw;
 }
 
-.card .image-wrapper {
+.card .image-wrapper{
   display: table-cell;
-  height: 25vw;
-  width: 15vw;
+  height: var(--vsize);
+  width: var(--hsize);
   text-align: center;
   vertical-align:middle;
   margin:0;
@@ -50,22 +58,19 @@ body {
 
 .image-wrapper {
   perspective: 100vw;
-  border-radius: 2vw;
+  border-radius: var(--border-radius);
 }
 
-.card-front .image-wrapper {
-  border: none;
-}
 
 .card-inner {
-  border-radius: 2vw;
+  border-radius: var(--border-radius);
   position: relative;
-  width: 100%;
-  height: 100%;
+  height: var(--vsize);
+  width: var(--hsize);
   text-align: center;
-  transition: transform 0.6s;
+  transition-property: transform;
+  transition-duration:var(--transition-speed);
   transform-style: preserve-3d;
-  /* border: .1vw solid black; */
   box-shadow: 0 .4vw .8vw 0 rgba(0,0,0,0.3);
 }
 
@@ -81,22 +86,17 @@ body {
   backface-visibility: hidden;
 }
 
-.card-front {
-  color: black;
-  border-radius: 2vw;
-  background-image: url('../cardimages/image034.png');
-  background-position: center;
-  background-size: 30% 18%;
-  background-color: #29adb9;
-}
-
 .card-back {
-  transform: rotateY(180deg);
-  border-radius: 2vw;
+  color: black;
+  border-radius: var(--border-radius);
+  background-image: var(--back-picture);
+  background-position: center;
+  background-size: var(--bimgsize);
+  background-color: var(--back-color);
 }
 
+.card-front {
+  transform: rotateY(180deg);
+  border-radius: var(--border-radius);
+}
 
-/* .line-break {
-  flex-basis: 100%;
-  height: 0;
-} */
