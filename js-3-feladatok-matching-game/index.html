@@ -10,64 +10,12 @@
 </head>
 
 <body>
-  <h1>Javascript pairs game</h1>
-  <h2>Click any card to begin</h2>
-  <div class="game-container">
-
-    <div id="game" class="game">
-    <!-- <div class="card">
-          <div class="card-inner">
-            <div class="card-front">
-              <div class="image-wrapper">
-                <img src="assets/cardimages/image001.png" alt="1">
-              </div>
-            </div>
-            <div class="card-back"></div>
-          </div>
-      </div>
-    </div> -->
-  </div>
-  <script src='assets/js/main.js'>
-    
-    // let cnt = 0;
-    // let ihandler = 0;
-    // let inners = document.querySelectorAll('.card-inner');
-    // inners.forEach(e => e.addEventListener('click', (ev) => {
-    //   if (e.parentElement.classList.contains('card-flipped')) {
-    //     inners.forEach(e => e.parentElement.classList.remove('card-flipped'));
-    //     if (ihandler) {
-    //       clearTimeout(ihandler);
-    //       ihandler = 0;
-    //     }
-    //     cnt = 0;
-    //   } else {
-    //     if (++cnt == 3) {
-    //       inners.forEach(e => e.parentElement.classList.remove('card-flipped'));
-    //       if (ihandler) {
-    //         clearTimeout(ihandler);
-    //         ihandler = 0;
-    //       }
-    //       cnt = cnet == 1;
-    //     } else if (cnt == 2) {
-    //       ihandler = setTimeout(() => {
-    //         if (cnt == 2) {
-    //           inners.forEach(e => e.parentElement.classList.remove('card-flipped'));
-    //           cnt = 0;
-    //           ihandler = 0;
-    //         }
-    //       }, 3000);
-    //     }
-    //     e.parentElement.classList.add('card-flipped');
-    //   }
-    // }));
-    // let pidx = 0;
-    // setInterval(() => {
-    //   pidx = (pidx % 53) + 1;
-    //   const rndH = () => Math.floor(Math.random() * 360);
-    //   // document.documentElement.style.setProperty('--back-picture', `url('../cardimages/image0${pidx.toString().padStart(2, '0')}.png')`);
-    //   // document.documentElement.style.setProperty('--back-color', `hsla(${rndH()}, 80%, 75%, .5)`);
-    //   // document.documentElement.style.setProperty('--back-color', `rgb(${rndColor()}, ${rndColor()}, ${rndColor()}, .5)`);
-    // }, 200);
+    <div class="game-container">
+      <h1>Javascript pairs game</h1>
+      <h2>Click any card to begin</h2>
+      <div id="game" class="game"></div>
+    </div>
+  <script type="module" src="assets/js/main.js">
   </script>
 </body>
 
