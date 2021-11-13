@@ -69,5 +69,6 @@ function showModal(modalContent) {
     modalContainer.onanimationend();
 
     modalContainer.style.display = "block";
+    modalContent.focus();
     return new Promise(f => resolveFunction = f);
 }
