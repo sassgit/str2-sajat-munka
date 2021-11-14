@@ -1,8 +1,14 @@
 'use strict';
 
-import { timeElement, className, defValues, } from "./defs.js";
+import {
+  timeElement,
+  className,
+  defValues,
+} from "./defs.js";
 
-import { pad00, } from "./utils.js";
+import {
+  pad00,
+} from "./utils.js";
 import init from "./main.js";
 
 const cards = [];
@@ -23,17 +29,14 @@ const isMatched = card => card.classList.contains(className.cardMatched);
 const isFlipped = card => card.classList.contains(className.cardFlip) && !isMatched(card);
 const flip = card => (card.classList.remove(className.cardFlipBack), card.classList.add(className.cardFlip));
 const flipback = card => (card.classList.remove(className.cardFlip), card.classList.add(className.cardFlipBack));
-const flipbackAll = () => (cards.forEach(e => isFlipped(e) ? flipback(e) : 0), stopFlipBackTimer());
+const flipbackAllExceptOf = (noflipbackCard) => (cards.forEach(e => e != noflipbackCard && isFlipped(e) ? flipback(e) : 0), stopFlipBackTimer());
 const stopFlipBackTimer = () => flipBackTimerHander ? (clearTimeout(flipBackTimerHander), flipBackTimerHander = 0, true) : false;
-const startFlipBackTimer = () => (stopFlipBackTimer(), flipBackTimerHander = setTimeout(flipbackAll, defValues.flipBackTimeout));
+const startFlipBackTimer = () => (stopFlipBackTimer(), flipBackTimerHander = setTimeout(flipbackAllExceptOf, defValues.flipBackTimeout));
 const initTime = () => {
   timestart = Date.now();
   printTime();
   timeHandler = setInterval(printTime, 1000);
 }
-
-
-
 
 const checkEndGame = () => {
   if (endGame = cards.every(e => isMatched(e))) {
@@ -54,19 +57,19 @@ const checkEndGame = () => {
 }
 
 const cardClick = ev => {
-  if (!endGame) {
+  const card = ev.target;
+  if (!endGame && !isMatched(card)) {
     if (!timestart) initTime();
-    const card = ev.target;
     const idx = cards.indexOf(card);
-    if (!card.classList.contains(className.cardMatched)) {
-      if (isFlipped(card)) {
-        flipbackAll();
-      } else {
-        let flipCount = cards.reduce((prev, e) => isFlipped(e) ? prev + 1 : prev, 1);
-        if (flipCount > 2) flipbackAll(), flipCount = 1;
-        const imgid = cardImg[idx].alt;
-        const matchedIdx = cards.findIndex((e, i) => isFlipped(e) && cardImg[i].alt == imgid);
-        flip(card);
+    if (isFlipped(card)) {
+      flipbackAllExceptOf();
+    } else {
+      const imgid = cardImg[idx].alt;
+      const matchedIdx = cards.findIndex((e, i) => isFlipped(e) && cardImg[i].alt == imgid);
+      flip(card);
+      const flipCount = cards.reduce((prev, e) => isFlipped(e) ? prev + 1 : prev, 0);
+      if (flipCount > 2) flipbackAllExceptOf(card);
+      else {
         if (flipCount == 2) {
           if (matchedIdx >= 0) {
             card.classList.add(className.cardMatched);
@@ -82,4 +85,9 @@ const cardClick = ev => {
 }
 
 
-export { cards, cardImg, timestart, cardClick, };
+export {
+  cards,
+  cardImg,
+  timestart,
+  cardClick,
+};

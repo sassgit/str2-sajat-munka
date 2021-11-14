@@ -7,6 +7,7 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   --back-picture: url('../cardimages/image034.png');
   --back-color: hsla(150, 45%, 50%, 1);
+  --border: .25vmin solid gray;
   --vsize: 25vmin;
   --hsize: 15vmin;
   --bimgsize: 33% 20%;
@@ -41,7 +42,7 @@ body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  border: 2px solid gray;
+  border: var(--border);
   border-radius: var(--border-radius);
   box-shadow: 0 .4vw .8vw 0 rgba(0, 0, 0, 0.3);
 }
@@ -242,3 +243,8 @@ body {
   animation: animation_disabe .1s infinite;
 }
 
+@media only screen and (max-height: 600px) {
+  :root {
+    font-size: 12px;
+  }
+}
