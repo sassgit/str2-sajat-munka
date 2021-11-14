@@ -3,35 +3,33 @@
 import {
   createDOMTree,
   appendChildren
-} from "./objectElement.js";
+} from "./object2DOM.js";
 
 import * as game from "./game.js";
 
 import {
   getImageUrl,
   pad00,
-  randomSort
+  randomSort,
 } from "./utils.js";
 
 import {
-  cardTree,
+  cardTreeObj,
   gameDiv,
   timeElement,
   defStrings,
-  defValues
+  defValues,
 } from "./defs.js";
 
 const createCards = (count) => {
   gameDiv.innerHTML = '';
   game.cards.length = 0;
   game.cardImg.length = 0;
-  appendChildren(gameDiv, ...createDOMTree(Array(count).fill(cardTree)));
+  appendChildren(gameDiv, ...createDOMTree(Array(count).fill(cardTreeObj)));
   game.cards.push(...gameDiv.querySelectorAll('.card'));
   game.cardImg.push(...gameDiv.querySelectorAll('.card-image'));
   game.cards.forEach(e => e.addEventListener('click', game.cardClick));
 }
-
-
 
 const initImages = () => {
   const imgRand = randomSort(defValues.imageCount);

@@ -1,8 +1,6 @@
 'use strict';
 
-const gameDiv = document.querySelector("#game");
-const timeElement = document.querySelector('h2');
-const className  = {
+const className = {
   cardFlip: 'card-flip',
   cardFlipBack: 'card-flipback',
   cardMatched: 'card-matched',
@@ -15,7 +13,12 @@ const defStrings = {
   animationCardFlipValue: 'animation_flip .5s forwards linear',
   animationCardBackValue: 'animation_flipBack .5s forwards linear',
   backPictureVar: '--back-picture',
+  gameDivSelector: '#game',
+  timeElementSelector: 'h2',
 };
+
+const gameDiv = document.querySelector(defStrings.gameDivSelector);
+const timeElement = document.querySelector(defStrings.timeElementSelector);
 
 const defValues = {
   flipBackTimeout: 3000,
@@ -25,7 +28,7 @@ const defValues = {
   imageCount: 53,
 }
 
-const cardTree = {
+const cardTreeObj = {
   '.card': {
     '.card-inner': {
       '.card-front': {
@@ -39,7 +42,14 @@ const cardTree = {
 };
 
 Object.freeze(className);
-Object.freeze(cardTree);
+Object.freeze(cardTreeObj);
 Object.freeze(defStrings);
 
-export { gameDiv, timeElement, cardTree, className, defStrings, defValues };
+export {
+  gameDiv,
+  timeElement,
+  cardTreeObj,
+  className,
+  defStrings,
+  defValues
+};

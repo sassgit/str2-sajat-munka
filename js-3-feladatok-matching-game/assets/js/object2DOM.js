@@ -1,3 +1,5 @@
+'use strict';
+
 const createElementWithClasses = (tag, ...classnames) => {
   const elem = document.createElement(tag);
   if (classnames.length)
