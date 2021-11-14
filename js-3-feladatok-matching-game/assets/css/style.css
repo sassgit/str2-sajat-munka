@@ -1,13 +1,21 @@
+@font-face {
+  font-family: Cyberverse;
+  src: url(fonts/Cyberverse.otf);
+}
+
 :root {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   --back-picture: url('../cardimages/image034.png');
-  --back-color: hsla(200, 75%, 60%, 0.75);
+  --back-color: hsla(150, 45%, 50%, 1);
   --vsize: 25vmin;
   --hsize: 15vmin;
   --bimgsize: 33% 20%;
   --border-radius: 1.5vmin;
-  --transition-speed: .5s;
   --card-margin: 1vmin;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --card-perspective: 50vmin;
+  --card-animation-flip: animation_flip .5s forwards linear;
+  --card-animation-flipback: animation_flipBack .5s forwards linear;
+  --card-animation-endgame: animation_endgame 4s forwards linear;
   font-size: 16px;
   user-select: none;
 
@@ -43,7 +51,7 @@ body {
   border-radius: var(--border-radius);
   margin: var(--card-margin);
   box-sizing: border-box;
-  perspective: 100vw;
+  perspective: var(--card-perspective);
 }
 
 .card .image-wrapper {
@@ -64,10 +72,92 @@ body {
 
 
 .image-wrapper {
-  perspective: 100vw;
   border-radius: var(--border-radius);
 }
 
+@keyframes animation_flip {
+  0% {
+    transform: translateY(0) rotateX(0deg) rotateY(0);
+  }
+  50% {
+    transform: translateY(30%) rotateX(90deg) rotateY(30deg);
+  }
+
+  100% {
+    transform: translateY(0) rotateX(180deg) rotateY(0);
+  }
+}
+
+@keyframes animation_flipBack {
+  0% {
+    transform: translateY(0) rotateX(180deg) rotateY(0);
+  }
+  50% {
+    transform: translateY(30%) rotateX(270deg) rotateY(30deg);
+  }
+
+  100% {
+    transform: translateY(0) rotateX(360deg) rotateY(0);
+  }
+}
+
+@keyframes animation_endgame {
+  0% {
+    transform: translateY(0) rotateX(180deg) rotateY(0);
+  }
+  5% {
+    transform: scale(1.1, 1.1) translateY(0) rotateX(180deg) rotateY(0);
+  }
+  10% {
+    transform: scale(1, 1) translateY(0) rotateX(180deg) rotateY(0);
+  }
+  15% {
+    transform: scale(1.1, 1.1) translateY(0) rotateX(180deg) rotateY(0);
+  }
+  20% {
+    transform: scale(1, 1) translateY(0) rotateX(180deg) rotateY(0);
+  }
+  25% {
+    transform: scale(1.1, 1.1) translateY(0) rotateX(180deg) rotateY(0);
+  }
+  30% {
+    transform: scale(1, 1) translateY(0) rotateX(180deg) rotateY(0);
+  }
+  35% {
+    transform: scale(1.1, 1.1) translateY(0) rotateX(180deg) rotateY(0);
+  }
+  40% {
+    transform: scale(1, 1) translateY(0) rotateX(180deg) rotateY(0);
+  }
+  45% {
+    transform: scale(1.1, 1.1) translateY(0) rotateX(180deg) rotateY(0);
+  }
+  50% {
+    transform: scale(1, 1) translateY(0) rotateX(180deg) rotateY(0);
+  }
+  55% {
+    transform: scale(1.1, 1.1) translateY(0) rotateX(180deg) rotateY(0);
+  }
+  60% {
+    transform: scale(1, 1) translateY(0) rotateX(180deg) rotateY(0);
+  }
+  65% {
+    transform: translateY(0) rotateZ(90deg) rotateX(180deg) rotateY(0);
+  }
+  70% {
+    transform: translateY(0) rotateZ(180deg) rotateX(180deg) rotateY(0);
+  }
+  75% {
+    transform: translateY(0) rotateZ(270deg) rotateX(180deg) rotateY(0);
+  }
+  80% {
+    transform: translateY(30%) rotateX(270deg) rotateY(30deg);
+  }
+
+  100% {
+    transform: translateY(0) rotateX(360deg) rotateY(0);
+  }
+}
 
 .card-inner {
   border-radius: var(--border-radius);
@@ -75,14 +165,28 @@ body {
   height: var(--vsize);
   width: var(--hsize);
   text-align: center;
-  transition-property: transform;
-  transition-duration: var(--transition-speed);
   transform-style: preserve-3d;
   box-shadow: 0 .4vw .8vw 0 rgba(0, 0, 0, 0.3);
+  transform: rotateX(0deg);
 }
 
-.card-flipped .card-inner {
-  transform: rotateY(180deg);
+.card-flip .card-inner {
+  transform: rotateX(180deg);
+  animation:var(--card-animation-flip);
+}
+
+.card-flipback .card-inner {
+  transform: rotateX(0deg);
+  animation:var(--card-animation-flipback);
+}
+
+.card-endgame .card-inner {
+  transform: rotateX(180deg);
+  animation:var(--card-animation-endgame);
+}
+
+.card-matched .card-inner {
+  transform: rotateX(180deg);
 }
 
 .card-front,
@@ -111,28 +215,30 @@ body {
 }
 
 .card-front {
-  transform: rotateY(180deg);
+  background: white;
+  transform: rotateX(180deg);
   border-radius: var(--border-radius);
 }
 
 @keyframes animation_disabe {
   0% {
-      transform: rotate(0deg);
+    transform: rotate(0deg);
   }
 
   25% {
-      transform: rotate(-10deg);
+    transform: rotate(-7deg);
   }
 
   75% {
-      transform: rotate(10deg);
+    transform: rotate(7deg);
   }
 
   100% {
-      transform: rotate(0deg);
+    transform: rotate(0deg);
   }
 }
 
-.card-disabled:active {
+.card-matched:active {
   animation: animation_disabe .1s infinite;
 }
+
