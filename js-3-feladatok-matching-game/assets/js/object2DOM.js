@@ -12,7 +12,7 @@ const createElementFromString = str => {
     return null;
   else {
     const arr = str.split('.');
-    return createElementWithClasses(arr.shift() || 'div', arr);
+    return createElementWithClasses(arr.shift() || 'div', ...arr);
   }
 }
 
