@@ -224,7 +224,7 @@ body {
   display: none;
 }
 
-@media only screen and (max-width: 600px) and (max-aspect-ratio: 9/16) {
+@media only screen and (max-aspect-ratio: 15/16) {
   .main {
     width: 100%;
     height: 60%;
@@ -237,6 +237,11 @@ body {
     height: 40%;
     /* border-radius: 0 0 var(--main-border-radius) var(--main-border-radius); */
   }
+
+  .aside .aside-header {
+    height: 45%;
+  }
+
   .aside .picture {
     width: 50%;
     margin: 2vw;
