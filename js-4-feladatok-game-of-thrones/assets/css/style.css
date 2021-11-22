@@ -1,0 +1,248 @@
+@font-face {
+  font-family: GameOfThrones;
+  src: url(../../fonts/Game\ of\ Thrones.ttf);
+}
+
+@font-face {
+  font-family: OldLondon;
+  src: url(../../fonts/OldLondonAlternate.ttf);
+}
+
+@font-face {
+  font-family: Dash;
+  src: url(../../fonts/Dash-Horizon-Demo.otf);
+}
+
+
+
+:root {
+  font-family: Dash, sans-serif;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  /* --main-border-radius: 2vmin; */
+  --main-img-size: 8.5vmin;
+  --main-font-size: 1.2vw;
+  --shadow-position: .4vmin;
+  --shadow-color: #0008;
+  --transition-speed: .2s;
+  --hover-scale: 1.2;
+  --selected-scale: 1.15;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.main {
+  display: flex;
+  position: fixed;
+  width: 75%;
+  height: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 1.6vmin;
+  background-image: url(../site/mapblue.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  /* border-radius: var(--main-border-radius) 0 0 var(--main-border-radius); */
+}
+
+.main-inside {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+
+.main-inside div {
+  font-size: 3vmin;
+  width: 12.5%;
+  height: 16.6667%;
+  box-sizing: border-box;
+}
+
+.main-inside .card .card-name{
+  text-align: center;
+  font-size: var(--main-font-size);
+  text-shadow: var(--shadow-position) var(--shadow-position) var(--shadow-position) var(--shadow-color);
+  width: 100%;
+  transform: translateY(-40%);
+  transition: text-shadow var(--transition-speed);
+}
+
+.main-inside .card .card-image{
+  border-radius: 100vmax;
+  box-shadow: var(--shadow-position) var(--shadow-position) var(--shadow-position) var(--shadow-color);
+  width: var(--main-img-size);
+  height: var(--main-img-size);
+  transition: box-shadow var(--transition-speed);
+  box-sizing: border-box;
+}
+
+.main-inside .card {
+  user-select: none;
+  transition: transform var(--transition-speed);
+}
+
+
+.main-inside .card.selected{
+  transform: scale(var(--selected-scale));
+}
+
+.main-inside .card.selected .card-image{
+  border: 3px dotted white;
+}
+
+.main-inside .card:hover{
+  transform: scale(var(--hover-scale));
+}
+
+
+.main-inside .card:active {
+  transform: scale(var(--hover-scale)) translate(var(--shadow-position),var(--shadow-position));
+}
+
+.main-inside .card:active .card-image {
+  box-shadow: 0 0 var(--shadow-position) var(--shadow-color);
+}
+
+.main-inside .card:active .card-name {
+  text-shadow: 0 0 var(--shadow-position) var(--shadow-color);
+}
+
+.aside {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  position: fixed;
+  right: 0;
+  width: 25%;
+  height: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background: #404040;
+  color: white;
+  /* border-radius: 0 var(--main-border-radius) var(--main-border-radius) 0; */
+}
+
+.aside .aside-header {
+  flex: 1;
+  width: 90%;
+  padding: 5%;
+  text-align: center;
+  margin: 0
+}
+
+.aside .aside-header h1 {
+  font-family: GameOfThrones;
+  font-weight: lighter;
+  font-size: 3vmin;
+}
+
+.aside .aside-footer {
+  font-family: Dash;
+  flex: 0;
+  width: 90%;
+  padding: 5%;
+  font-size: 3vmin;
+  text-align: center;
+}
+
+
+.person .name {
+  font-size: 3vmin;
+}
+
+.person .bio {
+  font-family: sans-serif;
+  font-size: 2vmin;
+  text-align:justify;
+}
+
+.person img.house {
+  height: 4vmin;
+  float: left;
+  margin: 0 1vmin 0 0;
+}
+
+.person .picture {
+  width: 100%;
+}
+
+
+
+
+
+.search__input {
+  border-radius: 0 .4vw .4vw 0;
+  font-size: 1.2vw;
+  padding: .375vw .75vw .375vw .75vw;
+  margin-top: .275vw;
+  transition: outline-color .15s;
+  height: 1.2vw;
+  border: none;
+}
+
+
+.search__input:focus {
+  outline-color: rgb(128, 189, 255);
+}
+
+
+.search__icon {
+  display: inline-block;
+  position: relative;
+  border: none;
+  outline: none;
+  font-size: 1.2vw;
+  height: 1.95vw;
+  border-radius: .4vw 0 0 .4vw;
+  right: -.35vw;
+  margin-left: 1vw;
+  background: white;
+}
+
+
+
+
+.hidden {
+  display: none;
+}
+
+@media only screen and (max-width: 600px) and (max-aspect-ratio: 9/16) {
+  .main {
+    width: 100%;
+    height: 60%;
+    /* border-radius: var(--main-border-radius) var(--main-border-radius) 0 0 ; */
+  }
+
+  .aside {
+    top: 60%;
+    width: 100%;
+    height: 40%;
+    /* border-radius: 0 0 var(--main-border-radius) var(--main-border-radius); */
+  }
+  .aside .picture {
+    width: 50%;
+    margin: 2vw;
+    float: left;
+  }
+  .aside-footer {
+    transform: scale(2.5);
+  }
+}
