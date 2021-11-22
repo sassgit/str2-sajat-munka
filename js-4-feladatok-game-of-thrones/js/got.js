@@ -3,6 +3,7 @@ import {
   appendChildren
 } from "./object2DOM.js";
 
+const gotHeader = document.querySelector('.aside-header h1');
 const mainDiv = document.querySelector('.main');
 const mainInside = mainDiv.querySelector('.main-inside');
 const pictureImg = document.querySelector('.picture');
@@ -36,6 +37,11 @@ init();
 function init() {
   loadImg();
   searchInput.addEventListener('input', searchInputChange);
+  gotHeader.addEventListener('click', gotHeaderClick);
+}
+
+function gotHeaderClick() {
+  mainDiv.scrollIntoView(true);
 }
 
 function selectPerson(person) {
@@ -91,6 +97,7 @@ function loadPerson(person) {
     bioDiv.textContent = person.bio;
     setHouse(person.house);
     show(pictureImg);
+    setTimeout(() => gotHeader.scrollIntoView(true), 200);
   } else {
     hide(pictureImg);
     nameDiv.textContent = cnfString;
