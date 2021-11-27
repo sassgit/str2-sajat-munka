@@ -1,0 +1,22 @@
+{
+  "name": "js-5-feladatok-zaro-projekt",
+  "version": "0.0.1",
+  "description": "Egy CRUD alkalmazás (js/HTML5), egy JSON-fájlt használ adatforrásként (json-server, 3000-es port), amely 100 felhasználó adatait (id, name, emailAddress, address) tartalmazza.",
+  "main": "index.js",
+  "scripts": {
+    "test": "json-server ./users.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sassgit/str2-sajat-munka.git#main"
+  },
+  "author": "Attila Sass",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sassgit/str2-sajat-munka/issues"
+  },
+  "homepage": "https://github.com/sassgit/str2-sajat-munka/tree/js-5-feladatok-zaro-projekt#readme",
+  "devDependencies": {
+    "json-server": "^0.17.0"
+  }
+}

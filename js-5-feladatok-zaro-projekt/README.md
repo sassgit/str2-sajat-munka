@@ -1,0 +1,1 @@
+# Egy CRUD alkalmazás (js/HTML5), egy JSON-fájlt használ adatforrásként (json-server, 3000-es port), amely 100 felhasználó adatait (id, name, emailAddress, address) tartalmazza.
