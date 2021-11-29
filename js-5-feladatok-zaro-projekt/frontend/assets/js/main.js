@@ -6,7 +6,7 @@ import {
 
 import { Read } from './crud.js';
 
-import {showUsers} from './dom.js';
+import {initDOM, refreshAll} from './dom.js';
 
 init();
 
@@ -15,5 +15,6 @@ init();
 
 
 async function init() {
-  showUsers(await Read());
+  initDOM();
+  refreshAll();
 }

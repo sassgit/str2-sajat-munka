@@ -4,14 +4,32 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/style.css">
   <title>Document</title>
 </head>
 <body>
   <h1>Users</h1>
-  <table class="users">
+  <button class="button create-user-button">Create new User</button>
+  <div class="create-user-form hide">
+    <h2>Add new user</h2>
+  <label>Name</label>
+  <input type="text" class="create-user-form-input">
+  <br>
+  <label>e-mail</label>
+  <input type="text" class="create-user-form-input">
+  <br>
+  <label>Address</label>
+  <input type="text" class="create-user-form-input">
+  <br>
+  <button class="button create-user-form-adduser">Add user</button>
+  <button class="button create-user-form-cancel">Cancel</button>
+  </div>
+  <br>
+  <br>
+  <table class="users-table hide">
     <thead class="users-thead">
       <tr class="users-thread-tr translate">
-        <td class="users-thread-name">
+        <td class="users-thread-name" >
           Name
         </td>
         <td class="users-thread-email">
@@ -29,6 +47,8 @@
       
     </tbody>
   </table>
+  <div class="footer-messages">
+  </div>  
   <script src="./node_modules/axios/dist/axios.min.js"></script>
   <script src="assets/js/main.js" type="module"></script>
 </body>

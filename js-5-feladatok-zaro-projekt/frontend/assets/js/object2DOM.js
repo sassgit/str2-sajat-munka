@@ -41,12 +41,8 @@ const createDOMTree = (treeObj) => {
   return retElements;
 }
 
-const flatDOM = element => {
-  const retVal = [];
-  retVal.push(element);
-  Array.from(element.children).forEach(e => retVal.push(...flatDOM(e)));
-  return retVal;
-}
+const flatDOM = (element, predicate) =>
+  !predicate || predicate(element) ? [element, ...Array.from(element.children).map(e => flatDOM(e, predicate)).filter(e => e.length > 0).flat()] : [];
 
 export {
   createDOMTree,

@@ -6,30 +6,44 @@ import {
   nameCompare
 } from './utils.js';
 
-function Create(user) {
+import {
+  Message
+} from './message.js';
 
+async function Create(user) {
+  try {
+    let response = await axios.post(defStrings.dataURL(), user);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    Message.syserror(error);
+  }
 }
 
 async function Read() {
   try {
-    let response = await axios.get(`${defStrings.serverURL}`);
+    let response = await axios.get(defStrings.dataURL());
     return [
       ...response.data,
     ].sort((a, b) => nameCompare(a.name, b.name));
   } catch (error) {
-
+    Message.syserror(error);
   }
 }
 
-function Update(user) {
-
+async function Update(user) {
+  try {
+    let response = await axios.put(defStrings.dataURL(user.id), user);
+  } catch (error) {
+    Message.syserror(error);
+  }
 }
 
 async function Delete(userID) {
   try {
-    let response = await axios.delete(`${defStrings.serverURL}${userID}`);
+    let response = await axios.delete(defStrings.dataURL(userID));
   } catch (error) {
-
+    Message.syserror(error);
   }
 }
 

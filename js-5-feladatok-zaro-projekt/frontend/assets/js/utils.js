@@ -9,7 +9,7 @@ const convertName = name => {
 }
 
 const nameCompare = (name1, name2) => {
-  return convertName(name1).localeCompare(convertName(name2));
+  return name1 ? convertName(name1).localeCompare(convertName(name2)) : name2 ? -1 : 0;
 }
 
 export { nameCompare };
