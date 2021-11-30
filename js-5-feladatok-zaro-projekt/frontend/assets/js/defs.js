@@ -119,10 +119,10 @@ const validatorRegex = {
 
 const userTree = {
   [`${tagNames.tr}.${classNames.trUserCN}`]: {
-    [`${tagNames.td}.${classNames.tdCN}.${classNames.tdDataCN}.${classNames.tdIdCN}`]: '',
-    [`${tagNames.td}.${classNames.tdCN}.${classNames.tdDataCN}.${classNames.tdNameCN}`]: '',
-    [`${tagNames.td}.${classNames.tdCN}.${classNames.tdDataCN}.${classNames.tdEmailCN}`]: '',
-    [`${tagNames.td}.${classNames.tdCN}.${classNames.tdDataCN}.${classNames.tdAddressCN}`]: '',
+    [`${tagNames.td}.${classNames.tdCN}.${classNames.tdDataCN}.${classNames.tdIdCN}`]: {div : ''},
+    [`${tagNames.td}.${classNames.tdCN}.${classNames.tdDataCN}.${classNames.tdNameCN}`]: {div : ''},
+    [`${tagNames.td}.${classNames.tdCN}.${classNames.tdDataCN}.${classNames.tdEmailCN}`]: {div : ''},
+    [`${tagNames.td}.${classNames.tdCN}.${classNames.tdDataCN}.${classNames.tdAddressCN}`]: {div : ''},
     [`${tagNames.td}.${classNames.tdCN}.${classNames.tdButtonsCN}`]: {
       [`${tagNames.button}.${classNames.buttonCN}.${classNames.editSaveButtonCN}`]: '',
       [`${tagNames.button}.${classNames.buttonCN}.${classNames.deleteUndoButtonCN}`]: '',
@@ -133,21 +133,21 @@ const userTree = {
 const userKeys = () => Object.keys(validatorRegex);
 
 const userTreeIdx = {
-  id: 1,
-  name: 2,
-  focusIdx: 2,
-  email: 3,
-  address: 4,
+  id: 2,
+  name: 4,
+  focusIdx: 4,
+  email: 6,
+  address: 8,
   get dataIndices() {
     return [this.name, this.email, this.address];
   },
   get dataKeys() {
     return userKeys();
   },
-  edit: 6,
-  delete: 7,
-  save: 6,
-  undo: 7,
+  edit: 10,
+  delete: 11,
+  save: 10,
+  undo: 11,
 }
 
 const userTreeButtonIdx = {

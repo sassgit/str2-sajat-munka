@@ -99,19 +99,19 @@
   padding-right: .5em;
 }
 
-.users-table .td-data:hover {
+.users-table .td-data:hover div {
   transform: translate(-.05em, -.05em);
   text-shadow: .05em .05em .1em rgba(128, 128, 128, .4);
   transition-property: transform text-shadow;
   transition-duration: .2s;
 }
 
-.users-table .edit-row .td-data:hover {
+.users-table .edit-row .td-data:hover div {
   transform: none;
   text-shadow: none;
 }
 
-.users-table .td-id:hover {
+.users-table .td-id:hover div {
   text-shadow: none;
 }
 
