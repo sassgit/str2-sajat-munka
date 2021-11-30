@@ -1,3 +1,5 @@
+import { classNames, tagNames } from "./defs.js";
+
 const registeredObjects = [];
 
 const translateObjects = [];
@@ -48,7 +50,7 @@ const setTextElements = (array, ...elements) => {
 }
 
 let filterFunc = textNode => /\w/.test(textNode.textContent);
-let skipFunc = element => element.tagName.toLowerCase() == 'script' || element.classList.contains('notranslate');
+let skipFunc = element => element.tagName.toLowerCase() == tagNames.script || element.classList.contains(classNames.notranslateCN);
 
 const createDOMregisterObj = (...elements) => {
   return getTextElements(filterFunc, skipFunc, ...elements);

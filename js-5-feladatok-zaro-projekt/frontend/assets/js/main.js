@@ -1,9 +1,8 @@
 import {
-  classNames,
   defStrings,
   eventNames,
+  tagNames,
   translateStrings,
-  userTree
 } from "./defs.js";
 
 import {
@@ -29,8 +28,8 @@ init();
 async function init() {
   initDOM();
   initLanguage(defStrings.pageLanguage);
-  registerDOM('body', document.querySelector('body'));
-  registerStringOjb('translateStrings', translateStrings);
+  registerDOM(defStrings.bodyTranslateName, document.querySelector(tagNames.body));
+  registerStringOjb(defStrings.translateStringsTranslateName, translateStrings);
   try {
       const response = await axios.get(defStrings.languageURL);
       addTranslateObjects(response.data);
@@ -43,7 +42,7 @@ async function init() {
   } else {
     setLanguage(defStrings.defaultLanguage);
   }
-  document.querySelector('html').lang = translateStrings.langPropertyOfHtmlTag;
+  document.querySelector(tagNames.html).lang = translateStrings.langPropertyOfHtmlTag;
   window.addEventListener(eventNames.hashchange, hashChange);
   refreshAll();
 }

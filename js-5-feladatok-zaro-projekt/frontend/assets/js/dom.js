@@ -40,9 +40,9 @@ const addInputValidator = input =>
 
 const addEnterEscapeHandler = (input, button_enter, button_escape) =>
   input.addEventListener(eventNames.keyup, event =>
-    event.code === keyCodes.enter ? button_enter.click() :
+    (event.code === keyCodes.enter || event.code === keyCodes.numpadEnter ) ? button_enter.click() :
     event.code === keyCodes.esc ? button_escape.click() :
-    undefined);
+    0);
 
 const user2DOM = user => {
   const row = createDOMTree(userTree)[0];

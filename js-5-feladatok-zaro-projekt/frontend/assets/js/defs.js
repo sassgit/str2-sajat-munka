@@ -28,6 +28,8 @@ const classNames = {
   createUserFormInputCN: 'create-user-form-input',
   footerMessagesCN: 'footer-messages',
   messageCN: 'message',
+  messageShowCN: 'message-show',
+  notranslateCN: 'notranslate', 
 };
 
 const selectors = {
@@ -74,6 +76,8 @@ const defStrings = {
   hashLang: '#lang=',
   hashLangDownload: '#langObjSave',
   LangDownloadFname: 'lang.json',
+  bodyTranslateName: 'body',
+  translateStringsTranslateName: 'translateStrings',
 };
 
 const defValues = {
@@ -82,16 +86,20 @@ const defValues = {
 
 const keyCodes = {
   enter: 'Enter',
+  numpadEnter: 'NumpadEnter',
   tab: 'Tab',
   esc: 'Escape',
 }
 
 const tagNames = {
+body: 'body',
+html: 'html',
 input: 'input',
 button: 'button',
 div: 'div',
 tr: 'tr',
 td: 'td',
+script: 'script',
 }
 
 const eventNames = {
