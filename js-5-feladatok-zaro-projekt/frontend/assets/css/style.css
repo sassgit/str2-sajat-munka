@@ -13,7 +13,7 @@
 
 .invalid-input {
   background: var(--error-background);
-  transition: background .5s;
+  transition: background-color .5s;
   transition-delay: .5s;
 }
 
