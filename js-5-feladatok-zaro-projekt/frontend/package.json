@@ -1,6 +1,6 @@
 {
   "name": "js-5-feladatok-zaro-projekt",
-  "version": "0.3.1",
+  "version": "0.5.1",
   "description": "Egy CRUD alkalmazás (js/HTML5), egy JSON-fájlt használ adatforrásként (json-server, 3000-es port), amely 100 felhasználó adatait (id, name, emailAddress, address) tartalmazza.",
   "main": "index.js",
   "scripts": {

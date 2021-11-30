@@ -94,7 +94,8 @@
 }
 
 .users-table .td-data:hover {
-  text-shadow: 0 0 .05em rgb(100, 255, 255);
+  transform: translate( -.05em, -.05em);
+  text-shadow: .05em .05em .1em rgba(0, 0, 0, .3);
 }
 
 .users-table .td-id:hover {

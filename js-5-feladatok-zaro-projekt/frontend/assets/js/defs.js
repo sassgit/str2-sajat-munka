@@ -67,10 +67,13 @@ const defStrings = {
   dataURL(id) {
     return this.serverURL + (id || '');
   },
-  defaultLanguage: 'EN-us',
-  languageURL: [
-    'assets/lang/hu.json',
-  ]
+  pageLanguage: 'EN-us',
+  defaultLanguage: 'HU-hu',
+  languageURL: 'assets/localization/lang.json',
+  localStorageLanguage: 'Language',
+  hashLang: '#lang=',
+  hashLangDownload: '#langObjSave',
+  LangDownloadFname: 'lang.json',
 };
 
 const defValues = {
@@ -97,6 +100,7 @@ const eventNames = {
   input: 'input',
   keyup: 'keyup',
   submit: 'submit',
+  hashchange: 'hashchange',
 }
 
 const validatorRegex = {
@@ -147,13 +151,14 @@ const validate = (value, dataKey) => validatorRegex[dataKey].test(value);
 
 // do not freeze!
 const translateStrings = {
-  edit: 'edit',
-  delete: 'delete',
-  save: 'save',
-  undo: 'undo',
-  doubleEditedError: 'You must first finish the current edit',
+  edit: 'Edit',
+  delete: 'Delete',
+  save: 'Save',
+  undo: 'Undo',
+  doubleEditedError: 'You must first finish the current edit!',
   validateError: 'Please check the data entered!',
   succssUpdate: 'The data successfully updated.',
+  langPropertyOfHtmlTag: 'en',
 }
 
 const freezeObjects = () => {

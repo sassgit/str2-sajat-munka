@@ -66,7 +66,9 @@ const registerStringOjb = (name, obj) => {
     obj,
   });
   const td = translateObjects[0].data;
-  td[name] = obj;
+  td[name] = {};
+  for (let e in obj)
+    td[name][e] = obj[e];
 }
 
 const registerDOM = (name, ...elements) => {
@@ -78,11 +80,12 @@ const registerDOM = (name, ...elements) => {
   td[name] = createDOMregisterObj(...elements);
 }
 
-const getTranslateObj = (language) => translateObjects.find(e => e.language = language);
+const getTranslateObjects = () => translateObjects;
 
-const addTranslateObj = (tobj) => translateObjects.push(tobj);
 
-const setLanguage = (language) => {
+const addTranslateObjects = tobj => !tobj || !tobj.forEach || tobj.forEach(tobjElem => translateObjects.some(e => e.language == tobjElem.language) || translateObjects.push(tobjElem));
+
+const setLanguage = language => {
   const tobj = translateObjects.find(o => o.language == language);
   if (tobj) {
     registeredObjects.forEach(ro => {
@@ -106,7 +109,7 @@ export {
   initLanguage,
   registerStringOjb,
   registerDOM,
-  getTranslateObj,
-  addTranslateObj,
+  getTranslateObjects,
+  addTranslateObjects,
   setLanguage,
 }
