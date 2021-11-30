@@ -78,7 +78,7 @@
 .users-table .td-buttons {
   background: rgba(255, 255, 255, .5);
   text-align: center;
-  min-width: 12em;
+  min-width: 15em;
 }
 
 .users-table .td-data {
@@ -136,14 +136,14 @@
   border-radius: .5em 0 0 .5em;
   border: 1px solid black;
   border-right: 1px dotted gray;
-  min-width: 5em;
+  min-width: 7em;
 }
 
 .delete-undo-button {
   border-radius: 0 .5em .5em 0;
   border: 1px solid black;
   border-left: 1px dotted gray;
-  min-width: 5em;
+  min-width: 7em;
 }
 
 .edit-row .td-buttons .edit-save-button {
