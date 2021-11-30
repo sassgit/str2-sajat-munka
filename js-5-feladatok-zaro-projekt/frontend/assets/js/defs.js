@@ -1,7 +1,18 @@
 'use strict';
 
 const classNames = {
+  trUserCN: 'tr-user',
+  tdCN: 'td-any',
+  tdDataCN: 'td-data',
+  tdIdCN: 'td-id',
+  tdNameCN: 'td-name',
+  tdEmailCN: 'td-email',
+  tdAddressCN: 'td-address',
+  tdButtonsCN: 'td-buttons',
+  editSaveButtonCN: 'edit-save-button',
+  deleteUndoButtonCN: 'delete-undo-button',
   inputCN: 'user-input',
+  editRowCN: 'edit-row',
   buttonCN: 'button',
   infoMessageCN: 'message-info',
   warningMessageCN: 'message-warning',
@@ -55,7 +66,11 @@ const defStrings = {
   serverURL: 'http://localhost:3000/users/',
   dataURL(id) {
     return this.serverURL + (id || '');
-  }
+  },
+  defaultLanguage: 'EN-us',
+  languageURL: [
+    'assets/lang/hu.json',
+  ]
 };
 
 const defValues = {
@@ -72,12 +87,16 @@ const tagNames = {
 input: 'input',
 button: 'button',
 div: 'div',
+tr: 'tr',
+td: 'td',
 }
 
 const eventNames = {
+  dblclick: 'dblclick',
   click: 'click',
   input: 'input',
   keyup: 'keyup',
+  submit: 'submit',
 }
 
 const validatorRegex = {
@@ -87,13 +106,14 @@ const validatorRegex = {
 };
 
 const userTree = {
-  'tr.tr-user': {
-    'td.td-user-name': '',
-    'td.td-user-email': '',
-    'td.td-user-address': '',
-    'td.td-buttons': {
-      'button.button.edit': '',
-      'button.button.delete': '',
+  [`${tagNames.tr}.${classNames.trUserCN}`]: {
+    [`${tagNames.td}.${classNames.tdCN}.${classNames.tdDataCN}.${classNames.tdIdCN}`]: '',
+    [`${tagNames.td}.${classNames.tdCN}.${classNames.tdDataCN}.${classNames.tdNameCN}`]: '',
+    [`${tagNames.td}.${classNames.tdCN}.${classNames.tdDataCN}.${classNames.tdEmailCN}`]: '',
+    [`${tagNames.td}.${classNames.tdCN}.${classNames.tdDataCN}.${classNames.tdAddressCN}`]: '',
+    [`${tagNames.td}.${classNames.tdCN}.${classNames.tdButtonsCN}`]: {
+      [`${tagNames.button}.${classNames.buttonCN}.${classNames.editSaveButtonCN}`]: '',
+      [`${tagNames.button}.${classNames.buttonCN}.${classNames.deleteUndoButtonCN}`]: '',
     }
   }
 }
@@ -101,20 +121,21 @@ const userTree = {
 const userKeys = () => Object.keys(validatorRegex);
 
 const userTreeIdx = {
-  name: 1,
-  focusIdx: 1,
-  email: 2,
-  address: 3,
+  id: 1,
+  name: 2,
+  focusIdx: 2,
+  email: 3,
+  address: 4,
   get dataIndices() {
     return [this.name, this.email, this.address];
   },
   get dataKeys() {
     return userKeys();
   },
-  edit: 5,
-  delete: 6,
-  save: 5,
-  undo: 6,
+  edit: 6,
+  delete: 7,
+  save: 6,
+  undo: 7,
 }
 
 const userTreeButtonIdx = {
@@ -132,6 +153,7 @@ const translateStrings = {
   undo: 'undo',
   doubleEditedError: 'You must first finish the current edit',
   validateError: 'Please check the data entered!',
+  succssUpdate: 'The data successfully updated.',
 }
 
 const freezeObjects = () => {

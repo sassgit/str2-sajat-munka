@@ -32,8 +32,11 @@ import {
 const tbody = document.querySelector(selectors.userTable);
 let editRow = null;
 
+const validateInputVisual = input => !validate(input.value, input.dataset.dataKey) ? input.classList.add(classNames.invalidInputCN) : input.classList.remove(classNames.invalidInputCN);
+
 const addInputValidator = input =>
-  input.addEventListener(eventNames.input, () => validate(input.value, input.dataset.dataKey) ? input.classList.remove(classNames.invalidInputCN) : input.classList.add(classNames.invalidInputCN));
+  input.addEventListener(eventNames.input, () => validateInputVisual(input));
+
 
 const addEnterEscapeHandler = (input, button_enter, button_escape) =>
   input.addEventListener(eventNames.keyup, event =>
@@ -42,19 +45,22 @@ const addEnterEscapeHandler = (input, button_enter, button_escape) =>
     undefined);
 
 const user2DOM = user => {
-  const tree = createDOMTree(userTree)[0];
-  const elements = flatDOM(tree);
-  tree.dataset.id = user.id;
+  const row = createDOMTree(userTree)[0];
+  const elements = flatDOM(row);
+  elements[userTreeIdx.id].textContent = row.dataset.id = user.id;
   userTreeIdx.dataIndices.forEach((idx, i) => {
     const key = userTreeIdx.dataKeys[i];
     elements[idx].textContent = user[key];
     elements[idx].dataset.dataKey = key;
   });
-  elements[userTreeIdx.edit].textContent = translateStrings.edit;
-  elements[userTreeIdx.delete].textContent = translateStrings.delete;
-  elements[userTreeIdx.delete].addEventListener(eventNames.click, deleteOrUndoClick);
-  elements[userTreeIdx.edit].addEventListener(eventNames.click, editOrSaveClick);
-  return tree;
+  const editButton = elements[userTreeIdx.edit];
+  const delButton = elements[userTreeIdx.delete];
+  editButton.textContent = translateStrings.edit;
+  editButton.addEventListener(eventNames.click, ev => editOrSave(row, elements[userTreeIdx.focusIdx]));
+  delButton.textContent = translateStrings.delete;
+  delButton.addEventListener(eventNames.click, ev => deleteOrUndo(row));
+  row.addEventListener(eventNames.dblclick, ev => (editRow ? 0 : editOrSave(row, ev.target)));
+  return row;
 };
 
 const initDOM = () => {
@@ -64,7 +70,7 @@ const initDOM = () => {
   const newUserAddButton = document.querySelector(selectors.newUserAdd)
   const newUserCancelButton = document.querySelector(selectors.newUserCancel)
   const showNewUserForm = () => {
-    newUserFormInputs.forEach(input => input.value = '');
+    newUserFormInputs.forEach(input => (input.value = '', input.classList.remove(classNames.invalidInputCN)));
     newUserButton.classList.add(classNames.hideCN);
     newUserForm.classList.remove(classNames.hideCN);
   }
@@ -73,6 +79,7 @@ const initDOM = () => {
     newUserButton.classList.remove(classNames.hideCN);
     newUserForm.classList.add(classNames.hideCN);
   }
+  newUserForm.addEventListener(eventNames.submit, ev => ev.preventDefault());
   newUserFormInputs.forEach((input, i) => {
     input.dataset.dataKey = userKeys()[i];
     addEnterEscapeHandler(input, newUserAddButton, newUserCancelButton);
@@ -86,6 +93,7 @@ const initDOM = () => {
       }).then(user => tbody.prepend(user2DOM(user)));
       hideNewUserForm();
     } else {
+      newUserFormInputs.forEach(e => validateInputVisual(e));
       Message.error(translateStrings.validateError);
     }
   });
@@ -113,7 +121,8 @@ const createInputElement = (row, dataKey, value) => {
   return input;
 }
 
-const convertEditMode = row => {
+const convertEditMode = (row, focusTd) => {
+  row.classList.add(classNames.editRowCN);
   const elements = flatDOM(row);
   userTreeIdx.dataIndices.forEach(e => {
     const element = elements[e];
@@ -121,8 +130,8 @@ const convertEditMode = row => {
     const input = createInputElement(row, element.dataset.dataKey, value);
     element.dataset.value = value;
     element.textContent = '';
-    element.appendChild(input);
-    if (e == userTreeIdx.focusIdx)
+    element.prepend(input);
+    if (element == focusTd)
       input.focus();
   });
   elements[userTreeIdx.edit].textContent = translateStrings.save;
@@ -132,6 +141,7 @@ const convertEditMode = row => {
 }
 
 const convertShowMode = (row, update = false) => {
+  row.classList.remove(classNames.editRowCN);
   const elements = flatDOM(row, e => !e.classList.contains(classNames.inputCN));
   userTreeIdx.dataIndices.forEach(e => {
     const element = elements[e];
@@ -153,7 +163,7 @@ const tryUpdate = row => {
     Update({
       id: row.dataset.id,
       ...Object.fromEntries(inputs.map(e => [e.dataset.dataKey, e.value]))
-    });
+    }).then(Message.info(translateStrings.succssUpdate));
     return true;
   } else {
     Message.error(translateStrings.validateError);
@@ -161,9 +171,7 @@ const tryUpdate = row => {
   }
 }
 
-function editOrSaveClick(ev) {
-  const element = ev.target;
-  const row = ev.target.parentElement.parentElement;
+function editOrSave(row, focusTd) {
   if (row.dataset.edit) {
     if (tryUpdate(row))
       convertShowMode(row, true);
@@ -171,20 +179,23 @@ function editOrSaveClick(ev) {
     if (editRow) {
       Message.error(translateStrings.doubleEditedError);
       editRow.scrollIntoView();
-    } else
-      convertEditMode(row);
+    } else {
+      convertEditMode(row, focusTd);
+    }
   }
 }
 
-function deleteOrUndoClick(ev) {
-  const element = ev.target;
-  const row = ev.target.parentElement.parentElement;
+function deleteOrUndo(row) {
   if (row.dataset.edit) {
     convertShowMode(row);
   } else {
-    const id = row.dataset.id;
-    row.parentElement.removeChild(row);
-    Delete(id);
+    if (editRow) {
+      Message.error(translateStrings.doubleEditedError);
+    } else {
+      const id = row.dataset.id;
+      row.remove();
+      Delete(id);
+    }
   }
 }
 

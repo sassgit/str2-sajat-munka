@@ -10,35 +10,61 @@
 <body>
   <h1>Users</h1>
   <button class="button create-user-button">Create new User</button>
-  <div class="create-user-form hide">
+  <form class="create-user-form hide">
     <h2>Add new user</h2>
-  <label>Name</label>
-  <input type="text" class="create-user-form-input">
-  <br>
-  <label>e-mail</label>
-  <input type="text" class="create-user-form-input">
-  <br>
-  <label>Address</label>
-  <input type="text" class="create-user-form-input">
-  <br>
-  <button class="button create-user-form-adduser">Add user</button>
-  <button class="button create-user-form-cancel">Cancel</button>
-  </div>
+    <table>
+      <tr>
+        <td>
+          <label>Name</label>
+        </td>
+        <td>
+          <input type="text" class="create-user-form-input">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>E-mail</label>
+        </td>
+        <td>
+          <input type="text" class="create-user-form-input">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>Address</label>
+        </td>
+        <td>
+          <input type="text" class="create-user-form-input">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button class="button create-user-form-adduser">Save</button>
+        </td>
+        <td>
+          <button class="button create-user-form-cancel">Cancel</button>
+        </td>
+      </tr>
+    </table>
+  </form>
   <br>
   <br>
   <table class="users-table hide">
     <thead class="users-thead">
-      <tr class="users-thread-tr translate">
-        <td class="users-thread-name" >
+      <tr class="users-thead-tr translate">
+        <td class="users-thead-id" >
+          ID
+        </td>
+        <td class="users-thead-name" >
           Name
         </td>
-        <td class="users-thread-email">
-          Email
+        <td class="users-thead-email">
+          E-mail
         </td>
-        <td class="users-thread-address">
+        <td class="users-thead-address">
           Address
         </td>
-        <td class="users-thread-controls">
+        <td class="users-thead-controls">
           Actions
         </td>
       </tr>
@@ -47,6 +73,7 @@
       
     </tbody>
   </table>
+  <div class="footer"></div>
   <div class="footer-messages">
   </div>  
   <script src="./node_modules/axios/dist/axios.min.js"></script>

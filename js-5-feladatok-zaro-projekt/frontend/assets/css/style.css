@@ -1,20 +1,162 @@
 :root {
-  font-size: 16;
+  font-size: 16px;
   font-family: sans-serif;
+  --error-background: rgb(255, 173, 173);
+  --warning-background: rgb(253, 255, 150);
+  --info-background: rgb(150, 255, 150);
+  --row2nplus1-background: rgb(220, 220, 220);
+  --row2n-background: rgb(245, 245, 245);
+  --row-hover-background: rgb(200, 200, 200);
+  --forecolor: black;
+  color: var(--forecolor);
 }
 
 .invalid-input {
-  background: rgb(255, 173, 173);
+  background: var(--error-background);
+  transition: background .5s;
+  transition-delay: .5s;
 }
+
 .hide {
   display: none;
 }
 
 .footer-messages {
+  font-size: 2em;
   position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
   background: white;
   text-align: center;
+}
+
+.message {
+  box-sizing: border-box;
+  border-radius: .25em;
+  margin: .5em;
+}
+
+.footer-messages .message-error {
+  background: var(--error-background);
+}
+
+.footer-messages .message-warning {
+  background: var(--warning-background);
+}
+
+.footer-messages .message-info {
+  background: var(--info-background);
+}
+
+.user-input {
+  color: var(--forecolor);
+  width: 95%;
+}
+
+.users-table .tr-user {
+  height: 1.6em;
+}
+
+.users-table .tr-user:nth-child(2n) {
+  background: var(--row2n-background);
+}
+
+.users-table .tr-user:nth-child(2n + 1) {
+  background: var(--row2nplus1-background);
+}
+
+.users-table .tr-user:hover {
+  background: var(--row-hover-background);
+}
+
+.users-table .edit-row:nth-child(n),
+.users-table .edit-row:nth-child(n):hover {
+  background: white;
+}
+
+.users-table .td-buttons {
+  background: rgba(255, 255, 255, .5);
+  text-align: center;
+  min-width: 12em;
+}
+
+.users-table .td-data {
+  min-width: 12em;
+  padding-left: .5em;
+  padding-right: .5em;
+}
+
+.users-table .td-id {
+  min-width: 3em;
+  padding-left: .5em;
+  padding-right: .5em;
+}
+
+.users-table .td-data:hover {
+  text-shadow: 0 0 .05em rgb(100, 255, 255);
+}
+
+.users-table .td-id:hover {
+  text-shadow: none;
+}
+
+.users-table {
+  border-spacing: 0;
+}
+
+.users-table td {
+  border-right: 1px solid black;
+}
+
+.users-table td:first-child {
+  border-left: 1px solid black;
+}
+
+.users-table tr:last-child td {
+  border-bottom: 1px solid black;
+}
+
+
+.users-thead tr td {
+  border-top: 1px solid black;
+  padding: .417em;
+  font-size:  1.2em;
+}
+
+.users-thead tr td.users-thead-controls {
+  text-align: center;
+}
+
+
+
+
+
+.edit-save-button {
+  border-radius: .5em 0 0 .5em;
+  border: 1px solid black;
+  border-right: 1px dotted gray;
+  min-width: 5em;
+}
+
+.delete-undo-button {
+  border-radius: 0 .5em .5em 0;
+  border: 1px solid black;
+  border-left: 1px dotted gray;
+  min-width: 5em;
+}
+
+.edit-row .td-buttons .edit-save-button {
+  background: green;
+  color: white
+}
+
+.edit-row .td-buttons .delete-undo-button {
+  background: red;
+  color: white;
+}
+
+
+.footer {
+  min-height: 10em;
 }

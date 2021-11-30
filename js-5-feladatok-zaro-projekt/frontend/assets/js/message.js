@@ -1,4 +1,4 @@
-import { classNames, defValues, tagNames } from "./defs.js";
+import { classNames, defValues, eventNames, tagNames } from "./defs.js";
 
 import { selectors } from "./defs.js";
 
@@ -7,6 +7,7 @@ const footer = document.querySelector(selectors.footerMessages);
 const Message = {
   showMessage(msg, className) {
     const messageDiv = document.createElement(tagNames.div);
+    messageDiv.addEventListener(eventNames.click, messageDiv.remove);
     messageDiv.classList.add(classNames.messageCN, className);
     messageDiv.textContent = msg;
     footer.prepend(messageDiv);
