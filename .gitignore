@@ -1,1 +1,7 @@
 .vscode
+**/node_modules/
+
+/js-4-feladatok-game-of-thrones/assets/css/style_old.css
+/js-4-feladatok-game-of-thrones/test.css
+/js-4-feladatok-game-of-thrones/test.html
+
