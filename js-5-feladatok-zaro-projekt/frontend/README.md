@@ -26,3 +26,9 @@ json-server indítása:
 ```
 npm test
 ```
+
+A különböző nyelvekhez (jelenleg magyar és angol) tartozó fordítások, melyek a DOM-ban és a translateStrings objektumban történnek, a `localization/lang.json` fájlban vannak. Ha módosítani kell, vagy más nyelvekhez is kellene ilyent készíteni akkor a 
+
+http://localhost:5500/#langObjSave
+
+megnyitásával a böngészőben a honlap normál betöltődése mellett letöltődik a `lang.json` fájl is (értelemszerűen a host és a port az aktuális szerver). Ez abban különbözik a `localization/lang.json` fájltól, hogy ennek első objektuma, ami az honlap eredeti nyelvét tartalmazza az aktuális honlapból van generálva, így ha a honlap változik, ennek a segítségével lehet a fordításokat is megcsinálni, és az új `localization/lang.json` fájlt elkészíteni. Majd kellene egy "merge" script (node.js-ben) ami a honlap változásaira után a fordítást megkönnyíti, jelenleg ugyanis a honlap változásaival a DOM azonosító string-jei megváltoz(hat)nak, és így a meglévő fordítások sem fognak működni, amit jelenleg most csak "kézzel" lehet orvolsolni.
