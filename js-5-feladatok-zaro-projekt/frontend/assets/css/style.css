@@ -96,6 +96,13 @@
 .users-table .td-data:hover {
   transform: translate( -.05em, -.05em);
   text-shadow: .05em .05em .1em rgba(0, 0, 0, .3);
+  transition-property: transform text-shadow;
+  transition-duration: .2s;
+}
+
+.users-table .edit-row .td-data:hover {
+  transform: none;
+  text-shadow: none;
 }
 
 .users-table .td-id:hover {
