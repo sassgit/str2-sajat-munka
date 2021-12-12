@@ -7,14 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <title>Document</title>
+  <title>Checkout</title>
 </head>
 
 <body>
   <div class="container mt-4">
     <div class="row">
       <div class="col-sm-4 order-sm-1">
-        <h2 class="h3 d-flex justify-content-between">
+        <h2 class="h3 d-flex justify-content-between mb-3">
           <span class="text-muted">Your cart</span>
           <span class="badge badge-secondary badge-pill px-3">3</badge>
         </h2>
@@ -78,14 +78,92 @@
             <div class="input-group-prepend">
               <div class="input-group-text">@</div>
             </div>
-            <input type="text" class="form-control" id="inputLastName" placeholder="Username">
+            <input type="text" class="form-control" id="inputUserName" placeholder="Username">
           </div>
         </div>
-        
+        <div class="form-group">
+          <label for="inputEmail">Email <span class="text-muted">(optional)</span> </label>
+          <input type="email" class="form-control" id="inputEmail" placeholder="you@example.com">
+        </div>
+        <div class="form-group">
+          <label for="inputAddress">Address</label>
+          <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+        </div>
+        <div class="form-group">
+          <label for="inputAddress2">Address 2 <span class="text-muted">(optional)</span></label>
+          <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment or suite">
+        </div>
+        <div class="row">
+          <div class="form-group col-sm-5">
+            <label for="inputCountry">Country</label>
+            <select id="inputCountry" class="form-control">
+              <option selected>Choose...</option>
+              <option>USA</option>
+              <option>Magyarország</option>
+            </select>
+          </div>
+          <div class="form-group col-sm-4">
+            <label for="inputState">State</label>
+            <select id="inputState" class="form-control">
+              <option selected>Choose...</option>
+            </select>
+          </div>
+          <div class="form-group col-sm-3">
+            <label for="inputZip">Zip</label>
+            <input type="text" class="form-control" id="inputZip">
+          </div>
+        </div>
+        <hr>
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="sameAddress">
+          <label class="custom-control-label" for="sameAddress">Shipping address is the same as my billing</label>
+        </div>
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="saveInformation">
+          <label class="custom-control-label" for="saveInformation">Save this information for next time</label>
+        </div>
+        <hr>
+        <h2>Payment</h2>
+        <div class="custom-control custom-radio">
+          <input type="radio" id="radioCredit" name="radiopayment" class="custom-control-input" checked>
+          <label class="custom-control-label" for="radioCredit">Credit card</label>
+        </div>
+        <div class="custom-control custom-radio">
+          <input type="radio" id="radioDebit" name="radiopayment" class="custom-control-input">
+          <label class="custom-control-label" for="radioDebit">Debit card</label>
+        </div>
+        <div class="custom-control custom-radio">
+          <input type="radio" id="radioPaypal" name="radiopayment" class="custom-control-input">
+          <label class="custom-control-label" for="radioPaypal">PayPal</label>
+        </div>
+        <div class="row mt-3">
+          <div class="form-group col-sm-6">
+            <label for="inputNameOnCard">Name on card</label>
+            <input type="text" class="form-control" id="inputNameOnCard">
+            <small class="text-muted">Full name as displayed on card</small>
+          </div>
+          <div class="form-group col-sm-6">
+            <label for="inputCardNumber">Credit card number</label>
+            <input type="text" class="form-control" id="inputCardNumber">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-sm-3">
+            <label for="inputExpiration">Expiration</label>
+            <input type="text" class="form-control" id="inputExpiration">
+          </div>
+          <div class="form-group col-sm-3">
+            <label for="inputCVV">CVV</label>
+            <input type="text" class="form-control" id="inputCVV">
+          </div>
+        </div>
+        <hr>
+        <button class="btn btn-primary btn-block mb-4">Continue to checkout</button>
       </div>
     </div>
   </div>
   </div>
+  <script src="./country.js"></script>
 </body>
 
 </html>
