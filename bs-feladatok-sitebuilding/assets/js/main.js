@@ -56,7 +56,7 @@ function aClick(a, ev) {
         const maxScrollPos = (document.documentElement.scrollHeight - document.documentElement.clientHeight);
         const scrollPos = Math.min(maxScrollPos, findPos(element));
         const easeFunc = scrollPos >= maxScrollPos || Math.abs(window.scrollY - scrollPos) > document.documentElement.clientHeight ? easeInOutCubic : easeOutBack;
-        console.log(scrollPos);
+        //console.log(scrollPos);
         scrollTo(scrollPos, scrollAnimationTime, easeFunc, () => window.location.hash = hashSelector);
         ev.preventDefault();
       }
