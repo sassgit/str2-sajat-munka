@@ -1,19 +1,14 @@
 'use strict';
 const scrollAnimationTime = 300;
 
-const modalPrivacy = new bootstrap.Modal(document.querySelector('#privacyModal'));
-const modalTerms = new bootstrap.Modal(document.querySelector('#termsModal'));
-const modalFaq = new bootstrap.Modal(document.querySelector('#faqModal'));
+// const modalPrivacy = new bootstrap.Modal(document.querySelector('#privacyModal'));
+// const modalTerms = new bootstrap.Modal(document.querySelector('#termsModal'));
+// const modalFaq = new bootstrap.Modal(document.querySelector('#faqModal'));
 
-[modalPrivacy, modalTerms, modalFaq].forEach(modal => Array.from(modal._element.querySelectorAll('button')).forEach(button => button.addEventListener('click', ev => modal.hide())));
-
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
+// [modalPrivacy, modalTerms, modalFaq].forEach(modal => Array.from(modal._element.querySelectorAll('button')).forEach(button => button.addEventListener('click', ev => modal.hide())));
 
 
 
-//window.addEventListener('hashchange', hashChange);
 Array.from(document.querySelectorAll('a')).forEach(a => a.addEventListener('click', ev => aClick(a, ev)));
 
 document.addEventListener('DOMContentLoaded', function () {
